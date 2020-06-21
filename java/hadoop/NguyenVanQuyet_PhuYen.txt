@@ -1,0 +1,9 @@
+TuyHoa,312.840,PhuYen
+DongHoa,125.280,PhuYen
+SongCau,120.780,PhuYen
+DongXuan,65.300,PhuYen
+PhuHoa,113.850,PhuYen
+SonHoa,60.290,PhuYen
+SongHinh,58.700,PhuYen
+TayHoa,127.000,PhuYen
+TuyAn,133.000,PhuYen
