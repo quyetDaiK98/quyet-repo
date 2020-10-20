@@ -71,5 +71,11 @@ public class User implements Serializable, UserDetails {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

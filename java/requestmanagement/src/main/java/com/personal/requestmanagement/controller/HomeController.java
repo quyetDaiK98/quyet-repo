@@ -12,4 +12,9 @@ public class HomeController {
 		model.addAttribute("test", "quyetDaiK");
 		return "index";
 	}
+	
+	@RequestMapping("/login")
+	public String login(Model model) {
+		return "login";
+	}
 }
