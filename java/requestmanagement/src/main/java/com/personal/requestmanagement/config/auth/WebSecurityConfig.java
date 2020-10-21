@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,15 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .authorizeRequests()
 	      .antMatchers("/admin/**").hasRole("ADMIN")
 	      .antMatchers("/login*").permitAll()
-	      .antMatchers("/dist/**").permitAll()
-	      .antMatchers("/plugins/**").permitAll()
 	      .anyRequest().authenticated()
 	      .and()
 	      .formLogin()
 	      .loginPage("/login")
 //	      .loginProcessingUrl("/perform_login")
 	      .defaultSuccessUrl("/index", true)
-	      .failureUrl("/login.html?error=true")
+	      .failureUrl("/login?error=true")
 //	      .failureHandler(authenticationFailureHandler())
 	      .and()
 	      .logout()
@@ -50,6 +49,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .deleteCookies("JSESSIONID");
 //	      .logoutSuccessHandler(logoutSuccessHandler());
 	      // ...
+	}
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	    web.ignoring()
+	    	.antMatchers("/dist/**")
+	    	.antMatchers("/plugins/**");
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.personal.requestmanagement.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +22,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		
 		User user = userRepository.findByUserName(username);
 		
+		return user;
+	}
+
+	@Override
+	public User getCurrentUser() {
+		// TODO Auto-generated method stub
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;
 	}
 

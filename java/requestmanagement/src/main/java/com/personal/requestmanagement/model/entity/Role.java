@@ -33,7 +33,7 @@ public class Role implements Serializable, GrantedAuthority {
 	
 	@Column(name = "role_name")
 	private String roleName;
-
+	
 	@Override
 	@Transient
 	public String getAuthority() {
