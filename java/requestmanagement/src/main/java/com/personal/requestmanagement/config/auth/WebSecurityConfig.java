@@ -24,8 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 		
-		auth.inMemoryAuthentication()
-        .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
+//		auth.inMemoryAuthentication()
+//        .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
 	}
 	
 	@Override
@@ -39,13 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .and()
 	      .formLogin()
 	      .loginPage("/login")
-//	      .loginProcessingUrl("/perform_login")
 	      .defaultSuccessUrl("/index", true)
 	      .failureUrl("/login?error=true")
 //	      .failureHandler(authenticationFailureHandler())
 	      .and()
 	      .logout()
-	      .logoutUrl("/perform_logout")
+	      .logoutUrl("/logout")
+	      .logoutSuccessUrl("/login?logout=true")
 	      .deleteCookies("JSESSIONID");
 //	      .logoutSuccessHandler(logoutSuccessHandler());
 	      // ...

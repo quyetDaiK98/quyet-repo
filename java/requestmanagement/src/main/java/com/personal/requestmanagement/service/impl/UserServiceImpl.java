@@ -5,11 +5,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.personal.requestmanagement.model.entity.User;
 import com.personal.requestmanagement.repository.UserRepository;
 import com.personal.requestmanagement.service.UserService;
 
+@Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 	
 	@Autowired
