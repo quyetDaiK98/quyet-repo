@@ -1,15 +1,30 @@
 package com.personal.requestmanagement.controller;
 
+import com.personal.requestmanagement.model.entity.User;
+import com.personal.requestmanagement.service.UserService;
+import com.personal.requestmanagement.utils.ThymeleafUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
+
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping({"/", "/index"})
-	public String home(Model model) {
-		model.addAttribute("test", "quyetDaiK");
+	public String home(HttpSession session,Model model) {
+//		ThymeleafUtil.insertContent(model, "content");
+
+		User user = userService.getCurrentUser();
+		session.setAttribute("username", user.getUsername());
+
+
+
 		return "index";
 	}
 	
