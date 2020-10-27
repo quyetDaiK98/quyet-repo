@@ -18,7 +18,7 @@ public class HomeController {
 	
 	@RequestMapping({"/", "/index"})
 	public String home(HttpSession session,Model model) {
-//		ThymeleafUtil.insertContent(model, "content");
+		ThymeleafUtil.insertContent(model,"layout", "content", "Dashboard", "Dashboard");
 
 		User user = userService.getCurrentUser();
 		session.setAttribute("username", user.getUsername());

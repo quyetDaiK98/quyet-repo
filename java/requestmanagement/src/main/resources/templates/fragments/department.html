@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<th:block th:fragment="list">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin tìm kiếm</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:action="@{/department}" method="GET">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label right">Mã phòng ban:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="code"
+                                                       placeholder="Mã phòng ban" th:value="${code}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label right">Tên phòng ban:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="name"
+                                                       placeholder="Tên phòng ban" th:value="${name}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                                <button type="submit" class="btn btn-info float-right">Tìm kiếm</button>
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" th:text="${title}"></h3>
+                            <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus"></i>Thêm mới</button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="table" class="table table-bordered table-hover">
+                                <thead class="center">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Mã phòng ban</th>
+                                    <th>Tên phòng ban</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${list != null && !list.empty}" th:each="record : ${list}">
+                                    <td class="center" th:text="${record.id}"></td>
+                                    <td th:text="${record.deptCode}"></td>
+                                    <td th:text="${record.deptName}"></td>
+                                    <td th:text="${record.deptName}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- DataTables -->
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+    <script>
+        $(function () {
+            $('#table').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+</th:block>
+
+<th:block th:fragment="save">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin phòng ban</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:action="@{/department/save}" th:object="${dto}" method="POST">
+                            <input type="hidden" th:field="*{id}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label right">Mã phòng ban:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" th:field="*{deptCode}"
+                                                       placeholder="Mã phòng ban" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label right">Tên phòng ban:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" th:field="*{deptName}"
+                                                       placeholder="Tên phòng ban" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                                <button type="submit" class="btn btn-primary float-right">Lưu</button>
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+</th:block>
+</body>
+</html>
+
