@@ -17,6 +17,8 @@
   <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
   <link rel="stylesheet" th:href="@{/plugins/jqvmap/jqvmap.min.css}" href="plugins/jqvmap/jqvmap.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" th:href="@{/plugins/toastr/toastr.min.css}" href="plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}" href="dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
@@ -57,6 +59,8 @@
   <script th:src="@{/plugins/summernote/summernote-bs4.min.js}" src="plugins/summernote/summernote-bs4.min.js"></script>
   <!-- overlayScrollbars -->
   <script th:src="@{/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}" src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- Toastr -->
+  <script th:src="@{/plugins/toastr/toastr.min.js}" src="plugins/toastr/toastr.min.js"></script>
   <!-- AdminLTE App -->
   <script th:src="@{/dist/js/adminlte.js}" src="dist/js/adminlte.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -66,7 +70,7 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-
+  <input type="hidden" id="message" th:value="${message}">
   <!-- Navbar -->
   <div th:insert="~{layout :: navbar}"></div>
   <!-- /.navbar -->
@@ -107,5 +111,28 @@
 
 </div>
 <!-- ./wrapper -->
+
+<script type="text/javascript" charset="UTF-8">
+  var messageTxt = $('#message').val();
+
+  if(notEmpty(messageTxt)){
+    var messages = JSON.parse(messageTxt);
+
+    if(!Array.isArray(messages))
+      messages = [messages];
+
+    for(i= 0; i < messages.length; i++){
+      var message = messages[i];
+      if(message.messageCode != '200')
+        toastr.error(message.messageName);
+      else
+        toastr.success(message.messageName);
+    }
+  }
+
+
+
+</script>
+
 </body>
 </html>

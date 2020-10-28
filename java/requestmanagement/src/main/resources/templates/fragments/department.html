@@ -52,7 +52,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title" th:text="${title}"></h3>
-                            <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus"></i>Thêm mới</button>
+                            <a th:href="@{/department/save}" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i>Thêm mới</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -70,7 +70,9 @@
                                     <td class="center" th:text="${record.id}"></td>
                                     <td th:text="${record.deptCode}"></td>
                                     <td th:text="${record.deptName}"></td>
-                                    <td th:text="${record.deptName}"></td>
+                                    <td class="center">
+                                        <a th:href="@{/department/save(id=${record.id})}" title="Chỉnh sửa"><i class="fas fa-pen-alt"></i></a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

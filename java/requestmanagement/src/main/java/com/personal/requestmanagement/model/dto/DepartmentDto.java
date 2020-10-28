@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -13,10 +13,10 @@ import javax.validation.constraints.NotNull;
 public class DepartmentDto {
 	private long id;
 
-	@NotNull(message = "Tên phòng ban không được để trống!")
+	@NotEmpty(message = "Tên phòng ban không được để trống!")
 	private String deptName;
 
-	@NotNull(message = "Mã phòng ban không được để trống!")
+	@NotEmpty(message = "Mã phòng ban không được để trống!")
 	private String deptCode;
 
 	public DepartmentDto(Department entity){

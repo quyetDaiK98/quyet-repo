@@ -4,6 +4,9 @@
  * You should not use this file in production.
  * This file is for demo purposes only.
  */
+function notEmpty (str){
+  return str !== null && str !== ''  && str!==undefined;
+}
 (function ($) {
   'use strict'
 
