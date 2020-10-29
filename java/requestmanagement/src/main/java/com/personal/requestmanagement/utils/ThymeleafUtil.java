@@ -40,6 +40,10 @@ public class ThymeleafUtil {
 		model.addAttribute("message", new Gson().toJson(new Message(CommonConst.ERROR_ACTION_CODE, CommonConst.ERROR_ACTION_MESS)));
 	}
 
+	public static void errorMessage(RedirectAttributes redirAttrs){
+		redirAttrs.addFlashAttribute("message", new Gson().toJson(new Message(CommonConst.ERROR_ACTION_CODE, CommonConst.ERROR_ACTION_MESS)));
+	}
+
 	public static void successMessage(Model model){
 		model.addAttribute("message", new Gson().toJson(new Message(CommonConst.SUCCESS_ACTION_CODE, CommonConst.SUCCESS_ACTION_MESS)));
 	}

@@ -54,6 +54,17 @@ public class DepartmentController {
         return this.save(model, dto);
     }
 
+    @GetMapping("/del")
+    public String delete(Model model, RedirectAttributes redirAttrs, @RequestParam(name = "id") Long id){
+        id = id == null ? 0 : id;
+        if(departmentService.remove(id))
+            ThymeleafUtil.successMessage(redirAttrs);
+        else
+            ThymeleafUtil.errorMessage(redirAttrs);
+
+        return "redirect:/department";
+    }
+
 
 
 

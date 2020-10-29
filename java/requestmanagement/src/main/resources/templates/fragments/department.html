@@ -41,7 +41,7 @@
                                     <!-- /.col -->
                                 </div>
                                 <!-- /.row -->
-                                <button type="submit" class="btn btn-info float-right">Tìm kiếm</button>
+                                <button type="submit" class="btn btn-info float-right"><i class="icn fas fa-search"></i>Tìm kiếm</button>
                             </div>
                             <!-- /.card-body -->
                         </form>
@@ -52,7 +52,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title" th:text="${title}"></h3>
-                            <a th:href="@{/department/save}" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i>Thêm mới</a>
+                            <a th:href="@{/department/save}" type="button" class="btn btn-primary float-right"><i class="icn fas fa-plus"></i>Thêm mới</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -71,7 +71,8 @@
                                     <td th:text="${record.deptCode}"></td>
                                     <td th:text="${record.deptName}"></td>
                                     <td class="center">
-                                        <a th:href="@{/department/save(id=${record.id})}" title="Chỉnh sửa"><i class="fas fa-pen-alt"></i></a>
+                                        <a th:href="@{/department/save(id=${record.id})}" title="Chỉnh sửa" class="icn"><i class="fas fa-pen-alt"></i></a>
+                                        <a th:href="@{/department/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -115,6 +116,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Thông tin phòng ban</h3>
+                            <a th:href="@{/department}" type="button" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -144,7 +146,7 @@
                                     <!-- /.col -->
                                 </div>
                                 <!-- /.row -->
-                                <button type="submit" class="btn btn-primary float-right">Lưu</button>
+                                <button type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
                             </div>
                             <!-- /.card-body -->
                         </form>
