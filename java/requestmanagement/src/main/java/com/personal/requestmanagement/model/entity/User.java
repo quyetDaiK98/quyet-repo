@@ -28,8 +28,11 @@ public class User implements Serializable, UserDetails {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "user_name")
+	@Column(name = "user_name", unique = true)
 	private String userName;
+
+	@Column(name = "email")
+	private String email;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -37,6 +40,10 @@ public class User implements Serializable, UserDetails {
 		joinColumns = @JoinColumn(name = "user_id"), 
   	    inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+
+	@ManyToOne
+	@JoinColumn(name = "dept_id")
+	private Department department;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

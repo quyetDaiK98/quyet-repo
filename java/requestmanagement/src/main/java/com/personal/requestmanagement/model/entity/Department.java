@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,5 +27,8 @@ public class Department implements Serializable {
 	
 	@Column(name = "deptCode")
 	private String deptCode;
+
+	@OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
+	private Set<User> users;
 
 }

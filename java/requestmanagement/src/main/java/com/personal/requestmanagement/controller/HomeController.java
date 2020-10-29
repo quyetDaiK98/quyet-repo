@@ -21,7 +21,7 @@ public class HomeController {
 		ThymeleafUtil.insertContent(model,"layout", "content", "Dashboard", "Dashboard");
 
 		User user = userService.getCurrentUser();
-		session.setAttribute("username", user.getUsername());
+		session.setAttribute("user", user);
 
 
 

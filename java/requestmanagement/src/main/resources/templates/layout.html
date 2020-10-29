@@ -39,7 +39,7 @@
                         <img th:src="@{/dist/img/user2-160x160.jpg}" src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block" th:text="${session.username}">user</a>
+                        <a href="#" class="d-block" th:text="${session.user.username}">user</a>
                     </div>
                 </div>
 
@@ -69,12 +69,6 @@
                                     <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon text-info"></i>
                                         <p>Đề nghị xin nghỉ phép</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon text-info"></i>
-                                        <p>Đề nghị xin về sớm</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
