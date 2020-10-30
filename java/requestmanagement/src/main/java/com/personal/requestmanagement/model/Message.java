@@ -1,4 +1,4 @@
-package com.personal.requestmanagement.model.dto;
+package com.personal.requestmanagement.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

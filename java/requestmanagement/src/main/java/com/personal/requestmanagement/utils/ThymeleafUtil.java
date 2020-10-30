@@ -2,7 +2,7 @@ package com.personal.requestmanagement.utils;
 
 import com.google.gson.Gson;
 import com.personal.requestmanagement.constant.CommonConst;
-import com.personal.requestmanagement.model.dto.Message;
+import com.personal.requestmanagement.model.Message;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
