@@ -10,6 +10,9 @@
     <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
     <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
 
+    <!-- daterange picker -->
+    <link rel="stylesheet" th:href="@{/plugins/daterangepicker/daterangepicker.css}">
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -33,6 +36,16 @@
                                             </select>
                                         </div>
                                         <!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label>Từ ngày:</label>
+                                            <div class="input-group date" id="fromDate" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.form group -->
                                     </div>
                                     <!-- /.col -->
                                     <div class="col-md-6">
@@ -45,6 +58,20 @@
                                                 </select>
                                         </div>
                                         <!-- /.form-group -->
+
+                                        <!-- Date and time range -->
+                                        <div class="form-group">
+                                            <label>Đến ngày:</label>
+
+                                            <div class="input-group date" id="toDate" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                                <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                        <!-- /.form group -->
                                     </div>
                                     <!-- /.col -->
                                 </div>
@@ -104,12 +131,21 @@
     <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
     <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
 
+    <!-- date-range-picker -->
+    <script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+
     <script>
         $(function () {
             //Initialize Select2 Elements
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             })
+
+            //Date range picker with time picker
+            $('.date').datetimepicker({
+                format: 'L'
+            })
+
 
             $('#table').DataTable({
                 "paging": true,
@@ -124,7 +160,10 @@
     </script>
 </th:block>
 
-<th:block th:fragment="leaveRequest">
+<th:block th:fragment="leave">
+    <!-- daterange picker -->
+    <link rel="stylesheet" th:href="@{/plugins/daterangepicker/daterangepicker.css}">
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -132,84 +171,55 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Đề nghị xin nghỉ phép</h3>
-                            <a th:href="@{/department}" type="button" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" th:action="@{/request/save}" th:object="${dto}" method="POST">
-                            <input type="hidden" th:field="*{id}">
+<!--                        <form class="form-horizontal" th:action="@{/request/save}" th:object="${dto}" method="POST">-->
+                        <form class="form-horizontal" method="POST">
+                            <input type="hidden">
+<!--                            <input type="hidden" th:field="*{id}">-->
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label right">Tên nhân viên:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" th:field="*{username}"
-                                                       placeholder="Mã phòng ban">
-                                            </div>
+                                        <div class="form-group">
+                                            <label>Tên nhân viên:</label>
+<!--                                            <input type="text" class="form-control" th:field="*{username}"-->
+                                            <input type="text" class="form-control"
+                                                   placeholder="Mã phòng ban">
                                         </div>
+                                        <div class="form-group">
+                                            <label>Lý do nghỉ:</label>
+                                            <textarea class="form-control" rows="1" placeholder="Enter ..."></textarea>
+                                        </div>
+                                        <!-- textarea -->
                                     </div>
                                     <!-- /.col -->
                                     <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label right">Tên phòng ban:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" th:field="*{deptName}"
-                                                       placeholder="Tên phòng ban" >
-                                            </div>
+                                        <div class="form-group">
+                                            <label>Tên phòng ban:</label>
+<!--                                            <input type="text" class="form-control" th:field="*{deptName}"-->
+<!--                                                   placeholder="Tên phòng ban" >-->
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên phòng ban" >
                                         </div>
-                                    </div>
-                                    <!-- /.col -->
-                                </div>
-                                <!-- /.row -->
+                                        <!-- /.form-group -->
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label right">Nghỉ từ ngày:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" th:field="*{fromDate}"
-                                                       >
+                                        <!-- Date and time range -->
+                                        <div class="form-group">
+                                            <label>Thời gian:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control float-right" id="reservationtime">
                                             </div>
+                                            <!-- /.input group -->
                                         </div>
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label right">Nghỉ đến ngày:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" th:field="*{toDate}"
-                                                       >
-                                            </div>
-                                        </div>
+                                        <!-- /.form group -->
                                     </div>
                                     <!-- /.col -->
                                 </div>
-                                <!-- /.row -->
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label right">Tên nhân viên:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" th:field="*{username}"
-                                                       placeholder="Mã phòng ban">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label right">Tên phòng ban:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" th:field="*{deptName}"
-                                                       placeholder="Tên phòng ban" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.col -->
-                                </div>
-                                <!-- /.row -->
 
                                 <button type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
                             </div>
@@ -221,6 +231,23 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+
+    <!-- date-range-picker -->
+    <script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+
+    <script>
+        $(function () {
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+        });
+    </script>
+
 </th:block>
 
 </body>

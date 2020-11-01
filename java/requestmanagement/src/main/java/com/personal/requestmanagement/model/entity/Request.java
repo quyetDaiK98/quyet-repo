@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -27,7 +28,20 @@ public class Request implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    
+    @Column(name = "type")
+    private int type;
+    
+    @Column(name = "reason")
+    private String reason;
+    
+    @Column(name = "fromDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fromDate;
+    
+    @Column(name = "toDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date toDate;
 
 
 }
