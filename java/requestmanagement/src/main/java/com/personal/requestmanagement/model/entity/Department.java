@@ -22,10 +22,10 @@ public class Department implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
-	@Column(name = "deptName")
+	@Column(name = "dept_name")
 	private String deptName;
 	
-	@Column(name = "deptCode")
+	@Column(name = "dept_code")
 	private String deptCode;
 
 	@OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)

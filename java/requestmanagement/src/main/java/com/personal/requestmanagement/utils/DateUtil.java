@@ -1,12 +1,14 @@
 package com.personal.requestmanagement.utils;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
 
@@ -33,6 +35,7 @@ public class DateUtil {
     public static final String FORMAT_MMDDYYYY_hhmmss_aa = "MM/dd/yyyy hh:mm aa";
     public static final String FORMAT_DDMMYYYY_HHMMSS= "dd/MM/yyyy HH:mm:ss";
     public static final String FORMAT_SIMPLE_DATE= "dd/MM";
+    public static final String FORMAT_DDMMYYYY_HHMM= "DD/MM/YYYY, HH:mm";
 
 	public static String getDateByFormat(String dateFormat) {
 		Calendar cal = Calendar.getInstance();
@@ -101,5 +104,15 @@ public class DateUtil {
 
 	public static LocalDate DateToLocalDate(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+	
+	public static Date stringToDate(String date, String format) {
+		try {
+			return new SimpleDateFormat(format, Locale.getDefault()).parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

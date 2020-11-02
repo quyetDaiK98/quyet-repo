@@ -35,13 +35,17 @@ public class Request implements Serializable {
     @Column(name = "reason")
     private String reason;
     
-    @Column(name = "fromDate")
+    @Column(name = "from_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fromDate;
     
-    @Column(name = "toDate")
+    @Column(name = "to_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date toDate;
+    
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
 
 }

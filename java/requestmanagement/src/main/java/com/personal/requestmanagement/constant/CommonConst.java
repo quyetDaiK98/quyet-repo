@@ -1,5 +1,7 @@
 package com.personal.requestmanagement.constant;
 
+import java.util.HashMap;
+
 public class CommonConst {
 	public static final int ERROR_FORM = 400;
 	
@@ -10,4 +12,14 @@ public class CommonConst {
 	public static final int ERROR_ACTION_CODE = 500;
 
 	public static final String ERROR_ACTION_MESS = "Thao tác thất bại";
+
+	public static HashMap<Integer, String> REQUEST_STATUS;
+
+	static {
+		REQUEST_STATUS = new HashMap<>();
+		REQUEST_STATUS.put(1, "Dự thảo");
+		REQUEST_STATUS.put(2, "Đã duyệt");
+		REQUEST_STATUS.put(3, "Đã xử lý");
+		REQUEST_STATUS.put(4, "Từ chối");
+	}
 }

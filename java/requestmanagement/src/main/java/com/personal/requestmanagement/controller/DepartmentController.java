@@ -26,6 +26,7 @@ public class DepartmentController {
         model.addAttribute("list", departmentService.findAllDto(code, name));
         model.addAttribute("code", code);
         model.addAttribute("name", name);
+
         return "index";
     }
 

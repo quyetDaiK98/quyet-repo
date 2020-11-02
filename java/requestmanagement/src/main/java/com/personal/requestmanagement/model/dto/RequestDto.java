@@ -3,6 +3,7 @@ package com.personal.requestmanagement.model.dto;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.personal.requestmanagement.model.entity.Request;
 import com.personal.requestmanagement.utils.DateUtil;
@@ -25,6 +26,7 @@ public class RequestDto {
     
     private int type;
     
+    @NotNull(message = "Lý do không được để trống !")
     private String reason;
     
     private String fromDate;
