@@ -35,7 +35,7 @@ public class DateUtil {
     public static final String FORMAT_MMDDYYYY_hhmmss_aa = "MM/dd/yyyy hh:mm aa";
     public static final String FORMAT_DDMMYYYY_HHMMSS= "dd/MM/yyyy HH:mm:ss";
     public static final String FORMAT_SIMPLE_DATE= "dd/MM";
-    public static final String FORMAT_DDMMYYYY_HHMM= "DD/MM/YYYY, HH:mm";
+    public static final String FORMAT_DDMMYYYY_HHMM= "dd/MM/yyyy, HH:mm";
 
 	public static String getDateByFormat(String dateFormat) {
 		Calendar cal = Calendar.getInstance();

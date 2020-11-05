@@ -51,7 +51,10 @@ public class DepartmentController {
             return "redirect:/department";
         }
 
-        ThymeleafUtil.errorMessages(model, errors);
+        if(errors != null && errors.getErrorCount() > 0){
+    		ThymeleafUtil.errorMessages(model, errors);
+    	} else ThymeleafUtil.errorMessage(model);
+        
         return this.save(model, dto);
     }
 

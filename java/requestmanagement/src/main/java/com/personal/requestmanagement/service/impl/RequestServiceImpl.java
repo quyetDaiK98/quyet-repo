@@ -28,8 +28,9 @@ public class RequestServiceImpl implements RequestService {
 
 	@Autowired
 	EntityManager entityManager;
-
+	
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<RequestDto> getAllDto(SearchRequest searchDto) {
 		// TODO Auto-generated method stub
 		String hql = "select new com.personal.requestmanagement.model.dto.RequestDto(entity) from Request entity where 1=1 ";
@@ -41,10 +42,10 @@ public class RequestServiceImpl implements RequestService {
 			hql += " and entity.status = :status ";
 
 		if(!StringUtil.isEmpty(searchDto.getFromDate()))
-			hql += " and entity.fromDate >= :fromDate ";
+			hql += " and DATE(entity.createdDate) >= DATE(:fromDate) ";
 
 		if(!StringUtil.isEmpty(searchDto.getToDate()))
-			hql += " and entity.toDate <= :toDate ";
+			hql += " and DATE(entity.createdDate) <= DATE(:toDate) ";
 
 		try {
 			Query query = entityManager.createQuery(hql, RequestDto.class);
@@ -57,7 +58,6 @@ public class RequestServiceImpl implements RequestService {
 
 			if(!StringUtil.isEmpty(searchDto.getFromDate()))
 				query.setParameter("fromDate", DateUtil.stringToDate(searchDto.getFromDate(), DateUtil.FORMAT_DDMMYYYY_HHMM));
-
 
 			if(!StringUtil.isEmpty(searchDto.getToDate()))
 				query.setParameter("toDate", DateUtil.stringToDate(searchDto.getToDate(), DateUtil.FORMAT_DDMMYYYY_HHMM));

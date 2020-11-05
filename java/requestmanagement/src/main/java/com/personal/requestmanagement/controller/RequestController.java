@@ -4,6 +4,7 @@ import com.personal.requestmanagement.constant.CommonConst;
 import com.personal.requestmanagement.model.dto.RequestDto;
 import com.personal.requestmanagement.model.search.SearchRequest;
 import com.personal.requestmanagement.service.RequestService;
+import com.personal.requestmanagement.service.UserService;
 import com.personal.requestmanagement.utils.ThymeleafUtil;
 
 import javax.validation.Valid;
@@ -26,18 +27,23 @@ public class RequestController {
 	
 	@Autowired
 	RequestService requestService;
+
+	@Autowired
+    UserService userService;
 	
     @GetMapping("")
-    public String list(Model model, SearchRequest searchDto){
+    public String list(Model model,@Valid SearchRequest searchDto, Errors errors){
         ThymeleafUtil.insertContent(model, "fragments/request", "list", "Danh sách đề nghị", "Đề nghị cá nhân");
 
         model.addAttribute("status", CommonConst.REQUEST_STATUS);
-        
+
+        model.addAttribute("type", CommonConst.REQUEST_TYPE);
+
         model.addAttribute("searchDto", searchDto);
 
         List<RequestDto> list = requestService.getAllDto(searchDto);
         model.addAttribute("list", list);
-
+        ThymeleafUtil.errorMessages(model, errors);
         return "index";
     }
 
@@ -59,8 +65,11 @@ public class RequestController {
             ThymeleafUtil.successMessage(redirAttrs);
             return "redirect:/request";
         }
-
-        ThymeleafUtil.errorMessages(model, errors);
+    	
+    	if(errors != null && errors.getErrorCount() > 0){
+    		ThymeleafUtil.errorMessages(model, errors);
+    	} else ThymeleafUtil.errorMessage(model);
+        
         return this.leave(model, dto);
 
     }

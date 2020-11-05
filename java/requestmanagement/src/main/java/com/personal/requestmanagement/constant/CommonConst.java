@@ -15,11 +15,17 @@ public class CommonConst {
 
 	public static HashMap<Integer, String> REQUEST_STATUS;
 
+	public static HashMap<Integer, String> REQUEST_TYPE;
+
 	static {
 		REQUEST_STATUS = new HashMap<>();
 		REQUEST_STATUS.put(1, "Dự thảo");
 		REQUEST_STATUS.put(2, "Đã duyệt");
 		REQUEST_STATUS.put(3, "Đã xử lý");
 		REQUEST_STATUS.put(4, "Từ chối");
+		
+		REQUEST_TYPE = new HashMap<>();
+		REQUEST_TYPE.put(1, "Đề nghị xin nghỉ phép");
+		REQUEST_TYPE.put(2, "Đề nghị mua vật tư");
 	}
 }

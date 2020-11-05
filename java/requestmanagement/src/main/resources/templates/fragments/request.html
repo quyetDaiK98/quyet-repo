@@ -31,8 +31,7 @@
                                             <label>Loại đề nghị</label>
                                             <select th:field="*{type}" class="form-control select2" style="width: 100%;">
                                                 <option value= 0 selected="selected">Chọn loại đề nghị</option>
-                                                <option value= 1>Đề nghị xin nghỉ phép</option>
-                                                <option value= 2>Đề nghị mua vật tư</option>
+                                                <option th:each="entry : ${type}" th:value="${entry.key}" th:text="${entry.value}"></option>
                                             </select>
                                         </div>
                                         <!-- /.form-group -->
@@ -94,16 +93,18 @@
                                 <thead class="center">
                                 <tr>
                                     <th>Id</th>
-                                    <th>Mã phòng ban</th>
-                                    <th>Tên phòng ban</th>
+                                    <th>Ngày đề nghị</th>
+                                    <th>loại đề nghị</th>
+                                    <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:if="${list != null && !list.empty}" th:each="record : ${list}">
                                     <td class="center" th:text="${record.id}"></td>
-                                    <td th:text="${record.deptCode}"></td>
-                                    <td th:text="${record.deptName}"></td>
+                                    <td class="center" th:text="${record.createdDate}"></td>
+                                    <td th:text="${type[__${record.type}__]}"></td>
+                                    <td th:text="${status[__${record.status}__]}"></td>
                                     <td class="center">
                                         <a th:href="@{/department/save(id=${record.id})}" title="Chỉnh sửa" class="icn"><i class="fas fa-pen-alt"></i></a>
                                         <a th:href="@{/department/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" title="Xóa"><i class="fas fa-trash-alt"></i></a>
@@ -197,7 +198,7 @@
                                         <div class="form-group">
                                             <label>Từ ngày:</label>
                                             <div class="input-group date" id="fromDate" data-target-input="nearest">
-                                                <input th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <input autocomplete="off" th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
                                                 <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -216,7 +217,7 @@
 
                                         <div class="form-group">
                                             <label>Đến ngày:</label>
-                                            <div class="input-group date" id="toDate" data-target-input="nearest">
+                                            <div autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
                                                 <input th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
                                                 <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
