@@ -51,7 +51,7 @@
                                         <div class="form-group">
                                             <label>Trạng thái</label>
                                                 <select th:field="*{status}" class="form-control select2" style="width: 100%;">
-                                                    <option value= -1 selected="selected">Chọn trạng thái</option>
+                                                    <option value= 0 selected="selected">Chọn trạng thái</option>
                                                     <option th:each="entry : ${status}" th:value="${entry.key}" th:text="${entry.value}"></option>
                                                 </select>
                                         </div>

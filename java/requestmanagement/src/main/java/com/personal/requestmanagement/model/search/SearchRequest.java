@@ -18,4 +18,10 @@ public class SearchRequest {
 	private String fromDate;
 	
 	private String toDate;
+
+	private long userId;
+
+	private String role;
+
+	private long deptId;
 }

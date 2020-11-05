@@ -32,4 +32,10 @@ public class HomeController {
 	public String login(Model model) {
 		return "login";
 	}
+	
+	@RequestMapping("/accessDenied")
+	public String accessDenied(Model model) {
+		ThymeleafUtil.insertContent(model,"layout", "accessDenied", "Access Denied", "Access Denied");
+		return "index";
+	}
 }

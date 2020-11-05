@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.personal.requestmanagement.model.entity.Role;
 import com.personal.requestmanagement.model.entity.User;
+import com.personal.requestmanagement.repository.DepartmentRepository;
 import com.personal.requestmanagement.repository.RoleRepository;
 import com.personal.requestmanagement.repository.UserRepository;
 import com.personal.requestmanagement.service.UserService;
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private DepartmentRepository departmentRepository;
 	
 
 	@Override
@@ -62,6 +66,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		
 		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 		entity.setUserName(dto.getUserName());
+		entity.setEmail(dto.getEmail());
+		
 		if(dto.getRoleCodes() != null && dto.getRoleCodes().size() > 0) {
 			Set<Role> roles = new HashSet<>();
 			for (String roleCode : dto.getRoleCodes()) {
@@ -70,6 +76,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			}
 			entity.setRoles(roles);
 		}
+		if(dto.getDepartment() != null && dto.getDepartment().getId() > 0)
+			entity.setDepartment(departmentRepository.getOne(dto.getDepartment().getId()));
 		
 		try {
 			userRepository.save(entity);

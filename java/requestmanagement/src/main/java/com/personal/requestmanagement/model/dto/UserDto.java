@@ -24,6 +24,8 @@ public class UserDto {
     
     private DepartmentDto department;
     
+    private String email;
+    
     public UserDto(User entity) {
     	if(entity == null)
     		return;

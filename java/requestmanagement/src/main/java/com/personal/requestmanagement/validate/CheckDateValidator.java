@@ -23,7 +23,6 @@ public class CheckDateValidator implements ConstraintValidator<DateConstraint, O
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		// TODO Auto-generated method stub
 		String fromValue = (String) new BeanWrapperImpl(value).getPropertyValue(fromDate);
 		
 		String toValue = (String) new BeanWrapperImpl(value).getPropertyValue(toDate);
