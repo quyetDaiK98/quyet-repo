@@ -55,8 +55,8 @@ public class RequestController {
     }
 
     @GetMapping("/leave")
-//    @Secured("EMP")
-    @PreAuthorize("hasRole('ROLE_EMP')")
+    @Secured("ROLE_EMP")
+//    @PreAuthorize("hasAnyRole('ROLE_EMP')")
     public String leave(Model model, RequestDto dto){
         ThymeleafUtil.insertContent(model, "fragments/request", "leave", "Đề nghị xin nghỉ phép", "Đề nghị cá nhân");
 

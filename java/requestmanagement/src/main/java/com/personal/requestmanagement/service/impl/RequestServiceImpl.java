@@ -50,7 +50,7 @@ public class RequestServiceImpl implements RequestService {
 			hql.append(" and DATE(entity.createdDate) <= DATE(:toDate) ");
 
 		if (searchDto.getRole().equals("ROLE_EMP"))
-			hql.append("entity.user.id = :userId");
+			hql.append(" and entity.user.id = :userId");
 
 		if (searchDto.getRole().equals("ROLE_MANAGER"))
 			hql.append(" and entity.user.department.id = :deptId and entity.status = 1 ");

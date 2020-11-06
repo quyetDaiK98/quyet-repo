@@ -38,7 +38,7 @@ public class Role implements Serializable, GrantedAuthority {
 	@Transient
 	public String getAuthority() {
 		// TODO Auto-generated method stub
-		return "ROLE_" + this.roleCode;
+		return this.roleCode;
 	}
 
 }
