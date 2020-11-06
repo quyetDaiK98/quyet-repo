@@ -2,7 +2,6 @@ package com.personal.requestmanagement.service.impl;
 
 import java.util.List;
 
-import com.personal.requestmanagement.constant.CommonConst;
 import com.personal.requestmanagement.model.search.SearchRequest;
 import com.personal.requestmanagement.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
