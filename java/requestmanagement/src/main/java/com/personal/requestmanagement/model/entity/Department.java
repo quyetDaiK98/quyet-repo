@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 @Entity
 @Table(name = "department")
 public class Department implements Serializable {
@@ -31,4 +31,36 @@ public class Department implements Serializable {
 	@OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
 	private Set<User> users;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getDeptCode() {
+		return deptCode;
+	}
+
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+	
 }

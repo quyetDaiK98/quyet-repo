@@ -16,8 +16,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+//@Getter
+//@Setter
 @Table(name = "role")
 public class Role implements Serializable, GrantedAuthority {
 
@@ -41,4 +41,28 @@ public class Role implements Serializable, GrantedAuthority {
 		return this.roleCode;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	
 }

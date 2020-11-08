@@ -14,9 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+//@Getter
+//@Setter
+//@NoArgsConstructor
 @DateConstraint(fromDate = "fromDate", toDate = "toDate")
 public class RequestDto {
 	@Id
@@ -38,7 +38,105 @@ public class RequestDto {
     
     private String createdDate;
     
-    public RequestDto(Request entity) {
+    public long getId() {
+		return id;
+	}
+
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+
+	public int getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+
+
+	public UserDto getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+
+
+
+	public int getType() {
+		return type;
+	}
+
+
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+
+
+	public String getReason() {
+		return reason;
+	}
+
+
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+
+
+	public String getFromDate() {
+		return fromDate;
+	}
+
+
+
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+
+
+
+	public String getToDate() {
+		return toDate;
+	}
+
+
+
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
+
+
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public RequestDto() {
+		super();
+	}
+
+	public RequestDto(Request entity) {
     	if(entity == null)
     		return;
     	this.id = entity.getId();

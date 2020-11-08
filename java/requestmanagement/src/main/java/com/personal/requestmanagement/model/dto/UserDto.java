@@ -10,9 +10,9 @@ import java.util.List;
 import com.personal.requestmanagement.model.entity.Role;
 import com.personal.requestmanagement.model.entity.User;
 
-@Getter
-@Setter
-@NoArgsConstructor
+//@Getter
+//@Setter
+//@NoArgsConstructor
 public class UserDto {
     private long id;
 
@@ -26,7 +26,81 @@ public class UserDto {
     
     private String email;
     
-    public UserDto(User entity) {
+    public long getId() {
+		return id;
+	}
+
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
+	public List<String> getRoleCodes() {
+		return roleCodes;
+	}
+
+
+
+	public void setRoleCodes(List<String> roleCodes) {
+		this.roleCodes = roleCodes;
+	}
+
+
+
+	public DepartmentDto getDepartment() {
+		return department;
+	}
+
+
+
+	public void setDepartment(DepartmentDto department) {
+		this.department = department;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public UserDto() {
+		super();
+	}
+
+	public UserDto(User entity) {
     	if(entity == null)
     		return;
     	

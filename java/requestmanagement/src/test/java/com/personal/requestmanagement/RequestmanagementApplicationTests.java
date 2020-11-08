@@ -24,9 +24,11 @@ public class RequestmanagementApplicationTests {
 	@Test
 	public void test() {
 		UserDto dto = new UserDto();
+		dto.setId(3);
 		dto.setPassword("123456");
-		dto.setUserName("manager");
-		dto.setRoleCodes(Arrays.asList(new String[] {"ROLE_MANAGER"}));
+		dto.setUserName("quyetnv");
+		dto.setEmail("quyetnv@gmail.com");
+		dto.setRoleCodes(Arrays.asList(new String[] {"ROLE_EMP"}));
 		DepartmentDto dept = new DepartmentDto();
 		dept.setId(1);
 		dto.setDepartment(dept);
