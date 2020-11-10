@@ -106,8 +106,8 @@
                                     <td th:text="${type[__${record.type}__]}"></td>
                                     <td th:text="${status[__${record.status}__]}"></td>
                                     <td class="center">
-                                        <a th:href="@{/request/info(id=${record.id})}" title="Chi tiết" class="icn"><i class="fas fa-search"></i></a>
-                                        <a th:href="@{/request/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a th:href="@{/department/save(id=${record.id})}" title="Chỉnh sửa" class="icn"><i class="fas fa-pen-alt"></i></a>
+                                        <a th:href="@{/department/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -198,7 +198,7 @@
                                         <div class="form-group">
                                             <label>Từ ngày:</label>
                                             <div class="input-group date" id="fromDate" data-target-input="nearest">
-                                                <input th:disabled="*{status != 0}" autocomplete="off" th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <input autocomplete="off" th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
                                                 <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -217,8 +217,8 @@
 
                                         <div class="form-group">
                                             <label>Đến ngày:</label>
-                                            <div th:disabled="*{status != 0}" autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
-                                                <input th:disabled="*{status != 0}" th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                            <div autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
+                                                <input th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
                                                 <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -226,21 +226,33 @@
                                         </div>
                                         <!-- /.form group -->
 
+
+                                        <!-- Date and time range -->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Thời gian:</label>-->
+<!--                                            <div class="input-group">-->
+<!--                                                <div class="input-group-prepend">-->
+<!--                                                    <span class="input-group-text"><i class="far fa-clock"></i></span>-->
+<!--                                                </div>-->
+<!--                                                <input type="text" class="form-control float-right" id="reservationtime">-->
+<!--                                            </div>-->
+<!--                                            &lt;!&ndash; /.input group &ndash;&gt;-->
+<!--                                        </div>-->
+                                        <!-- /.form group -->
                                     </div>
                                     <!-- /.col -->
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Lý do nghỉ:</label>
-                                            <textarea th:disabled="*{status != 0}" th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
+                                            <textarea th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
                                         </div>
                                         <!-- textarea -->
                                     </div>
                                 </div>
 
-                                <a th:if="*{status != 0}" th:href="@{/request}" type="button" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
 
-                                <button th:if="*{status == 0}" type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
+                                <button type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
                             </div>
                             <!-- /.card-body -->
                         </form>
