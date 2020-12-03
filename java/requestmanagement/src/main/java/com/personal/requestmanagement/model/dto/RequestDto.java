@@ -32,8 +32,10 @@ public class RequestDto {
     @NotEmpty(message = "Lý do không được để trống !")
     private String reason;
     
+    @NotEmpty(message = "Thời gian từ không được để trống !")
     private String fromDate;
     
+    @NotEmpty(message = "Thời gian đến được để trống !")
     private String toDate;
     
     private String createdDate;

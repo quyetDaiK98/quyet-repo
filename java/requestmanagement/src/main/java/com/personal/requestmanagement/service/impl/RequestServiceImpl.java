@@ -121,13 +121,20 @@ public class RequestServiceImpl implements RequestService {
 	@Override
 	public boolean remove(long id) {
 		// TODO Auto-generated method stub
+		try {
+			requestRepository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 	}
 
 	@Override
 	public RequestDto findOneDto(long id) {
 		// TODO Auto-generated method stub
-		return null;
+		Request entity = requestRepository.getOne(id);
+		return new RequestDto(entity);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.personal.requestmanagement.controller;
 
+import com.personal.requestmanagement.model.dto.UserDto;
 import com.personal.requestmanagement.model.entity.User;
 import com.personal.requestmanagement.service.UserService;
 import com.personal.requestmanagement.utils.ThymeleafUtil;
