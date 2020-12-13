@@ -20,9 +20,6 @@ import org.apache.hadoop.mapred.Reporter;
 
 
 public class KnnMapper extends MapReduceBase implements Mapper<LongWritable, Text, Text, Text> {
-//	public static Point newPoint1 = new Point(100 + new Random().nextFloat() * (1000 - 100),100 + new Random().nextFloat() * (1000 - 100),100 + new Random().nextFloat() * (1000 - 100));
-//	public static Point newPoint2 = new Point(100 + new Random().nextFloat() * (1000 - 100),100 + new Random().nextFloat() * (1000 - 100),100 + new Random().nextFloat() * (1000 - 100));
-//	public Point newPoint3 = new Point();
 	public static List<Point> newPoints = new ArrayList<Point>();
 	
 	float distance(Point p1, Point p2) {
@@ -31,9 +28,6 @@ public class KnnMapper extends MapReduceBase implements Mapper<LongWritable, Tex
 			sum += Math.pow(p1.values.get(i) - p2.values.get(i), 2);
 		
 		return (float) Math.sqrt(sum);
-		
-//		double a = Math.sqrt(Math.pow(p1.x1 - p2.x1, 2) + Math.pow(p1.x2 - p2.x2, 2) + Math.pow(p1.x3 - p2.x3, 2));
-//		return (float) Math.sqrt(Math.pow(p1.x1 - p2.x1, 2) + Math.pow(p1.x2 - p2.x2, 2) + Math.pow(p1.x3 - p2.x3, 2));
 	}
 	
 	@Override
@@ -53,13 +47,14 @@ public class KnnMapper extends MapReduceBase implements Mapper<LongWritable, Tex
 					// Read the file split by the splitter and store it in
 					// the list
 					String name = "NEWPOINT ";
-					int count = 1;
+//					int count = 1;
 					while ((line = cacheReader.readLine()) != null) {
 						List<String> temp = Arrays.asList(line.split(","));
 						Point newPoint = new Point(temp);
-						newPoint.name = name + count;
+//						newPoint.name = name + count;
+						newPoint.name = line;
 						newPoints.add(newPoint);
-						count++;
+//						count++;
 					}
 				}
 				finally {

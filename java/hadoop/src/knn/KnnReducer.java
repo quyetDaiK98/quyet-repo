@@ -51,7 +51,7 @@ public class KnnReducer extends MapReduceBase implements Reducer<Text, Text, Tex
 		try {
 			Text key = t_key;
 			List<Neighbor> allNeighbors = new ArrayList<Neighbor>();
-			
+			//add neighbors
 			while (values.hasNext()) {
 				// replace type of value with the actual type of our value
 				String[] arr = values.next().toString().split("\\|");
@@ -60,6 +60,7 @@ public class KnnReducer extends MapReduceBase implements Reducer<Text, Text, Tex
 				neighbor.label = Short.valueOf(arr[1]);
 				allNeighbors.add(neighbor);
 			}
+			//sap xep
 			Collections.sort(allNeighbors);
 			
 			List<Neighbor> kNearestNeighbors = allNeighbors.subList(0, k);
