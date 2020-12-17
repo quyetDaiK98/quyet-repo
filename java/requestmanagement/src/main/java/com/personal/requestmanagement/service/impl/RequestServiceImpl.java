@@ -52,10 +52,10 @@ public class RequestServiceImpl implements RequestService {
 			hql.append(" and entity.user.id = :userId");
 
 		if (searchDto.getRole().equals("ROLE_MANAGER"))
-			hql.append(" and entity.user.department.id = :deptId and entity.status = 1 ");
+			hql.append(" and entity.user.department.id = :deptId and entity.status in (1,2,4) ");
 
 		if (searchDto.getRole().equals("ROLE_OPERATOR"))
-			hql.append(" and entity.status = 2 ");
+			hql.append(" and entity.status in (2,3,5) ");
 
 		try {
 			Query query = entityManager.createQuery(hql.toString(), RequestDto.class);
@@ -135,6 +135,20 @@ public class RequestServiceImpl implements RequestService {
 		// TODO Auto-generated method stub
 		Request entity = requestRepository.getOne(id);
 		return new RequestDto(entity);
+	}
+
+	@Override
+	public boolean changeStatus(int reqId, int status) {
+		try {
+			Request entity = requestRepository.getOne((long) reqId);
+			if(entity != null)
+				entity.setStatus(status);
+			requestRepository.save(entity);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
 	}
 
 }

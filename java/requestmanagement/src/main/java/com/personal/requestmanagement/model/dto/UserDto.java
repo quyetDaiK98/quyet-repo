@@ -21,12 +21,22 @@ public class UserDto {
     private String userName;
 
     private List<String> roleCodes;
+
+    private String roleCode;
     
     private DepartmentDto department;
     
     private String email;
-    
-    public long getId() {
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public long getId() {
 		return id;
 	}
 
@@ -115,6 +125,7 @@ public class UserDto {
 				roleCodes.add(role.getRoleCode());
 				
 			this.roleCodes = roleCodes;
+			this.roleCode = roleCodes.get(0);
     	}
     	
     	if(entity.getDepartment() != null) 

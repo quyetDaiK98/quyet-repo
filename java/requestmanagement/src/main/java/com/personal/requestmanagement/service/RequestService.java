@@ -14,4 +14,6 @@ public interface RequestService {
 	boolean remove(long id);
 	
 	RequestDto findOneDto(long id);
+
+	boolean changeStatus(int reqId, int status);
 }

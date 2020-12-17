@@ -39,8 +39,50 @@ public class RequestDto {
     private String toDate;
     
     private String createdDate;
-    
-    public long getId() {
+
+    private String typeStr;
+
+    private String statusStr;
+
+	public String getTypeStr() {
+		switch (this.type){
+			case 1:
+				return "Đề nghị xin nghỉ phép";
+			case 2:
+				return "Đề nghị mua vật tư";
+			default:
+				return "";
+		}
+	}
+
+	public void setTypeStr(String typeStr) {
+		this.typeStr = typeStr;
+	}
+
+	public String getStatusStr() {
+		switch (this.status){
+			case 1:
+				return "Dự thảo";
+			case 2:
+				return "Đã duyệt";
+			case 3:
+				return "Đã xử lý";
+			case 4:
+				return "Từ chối";
+			case 5:
+				return "Hoàn thành";
+			case 6:
+				return "Đã hủy";
+			default:
+				return "";
+		}
+	}
+
+	public void setStatusStr(String statusStr) {
+		this.statusStr = statusStr;
+	}
+
+	public long getId() {
 		return id;
 	}
 

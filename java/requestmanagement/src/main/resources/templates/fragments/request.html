@@ -103,11 +103,11 @@
                                 <tr th:if="${list != null && !list.empty}" th:each="record : ${list}">
                                     <td class="center" th:text="${record.id}"></td>
                                     <td class="center" th:text="${record.createdDate}"></td>
-                                    <td th:text="${type[__${record.type}__]}"></td>
-                                    <td th:text="${status[__${record.status}__]}"></td>
+                                    <td th:text="${record.typeStr}"></td>
+                                    <td th:text="${record.statusStr}"></td>
                                     <td class="center">
                                         <a th:href="@{/request/info(id=${record.id})}" title="Chi tiết" class="icn"><i class="fas fa-search"></i></a>
-                                        <a th:href="@{/request/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a th:href="@{/request/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Hủy"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -177,6 +177,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Đề nghị xin nghỉ phép</h3>
+                            <div style="color: red" class="text-right" th:text="${statusStr}"></div>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -238,9 +239,10 @@
                                     </div>
                                 </div>
 
-                                <a th:if="*{status != 0}" th:href="@{/request}" type="button" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
+<!--                                <a th:if="*{status != 0}" th:href="@{/request}" type="button" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>-->
+                                <a type="button" onclick="window.history.go(-1);" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
 
-                                <button th:if="*{status == 0}" type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
+                                <button style="margin-right: 7px" th:if="*{status == 0}" type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
                             </div>
                             <!-- /.card-body -->
                         </form>
@@ -269,6 +271,7 @@
     </script>
 
 </th:block>
+
 
 </body>
 </html>

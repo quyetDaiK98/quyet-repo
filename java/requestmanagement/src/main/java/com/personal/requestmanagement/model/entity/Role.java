@@ -28,7 +28,7 @@ public class Role implements Serializable, GrantedAuthority {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "role_code")
+	@Column(name = "role_code", unique = true)
 	private String roleCode;
 	
 	@Column(name = "role_name")

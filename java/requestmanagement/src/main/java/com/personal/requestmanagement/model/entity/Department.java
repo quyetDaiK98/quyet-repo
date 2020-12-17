@@ -25,7 +25,7 @@ public class Department implements Serializable {
 	@Column(name = "dept_name")
 	private String deptName;
 	
-	@Column(name = "dept_code")
+	@Column(name = "dept_code", unique = true)
 	private String deptCode;
 
 	@OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)

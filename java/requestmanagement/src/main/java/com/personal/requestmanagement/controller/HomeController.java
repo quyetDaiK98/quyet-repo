@@ -23,6 +23,7 @@ public class HomeController {
 
 		User user = userService.getCurrentUser();
 		session.setAttribute("user", user);
+		session.setAttribute("userDto", new UserDto(user));
 
 		return "index";
 	}

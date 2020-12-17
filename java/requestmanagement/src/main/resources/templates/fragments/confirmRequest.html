@@ -23,7 +23,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" th:object="${searchDto}" th:action="@{/request}" method="GET">
+                        <form class="form-horizontal" th:object="${searchDto}" th:action="@{/confirmRequest}" method="GET">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -106,8 +106,8 @@
                                     <td th:text="${type[__${record.type}__]}"></td>
                                     <td th:text="${status[__${record.status}__]}"></td>
                                     <td class="center">
-                                        <a th:href="@{/department/save(id=${record.id})}" title="Chỉnh sửa" class="icn"><i class="fas fa-pen-alt"></i></a>
-                                        <a th:href="@{/department/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a th:href="@{/request/info(id=${record.id})}" title="Chi tiết" class="icn"><i class="fas fa-search"></i></a>
+                                        <a th:if="${record.status} == 1" th:href="@{/confirmRequest/save(id=${record.id})}" title="Thao tác" class="icn"><i class="fas fa-pen-alt"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -180,11 +180,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" th:action="@{/request/leave/save}" th:object="${dto}" method="POST">
-                            <input type="hidden" th:field="*{id}">
-                            <input type="hidden" name="user.id" th:value="${session.user.getId()}">
-                            <input type="hidden" name="type" value="1">
-                            <input type="hidden" name="status" value="1">
+                        <form class="form-horizontal" th:object="${dto}" method="POST">
+                            <input type="hidden" id="id"  th:value="*{id}">
 
                             <div class="card-body">
                                 <div class="row">
@@ -192,13 +189,13 @@
                                         <div class="form-group">
                                             <label>Tên nhân viên:</label>
                                             <input type="text" class="form-control" disabled
-                                                   th:value="${session.user.userName}">
+                                                   th:value="${dto.user.userName}">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Từ ngày:</label>
                                             <div class="input-group date" id="fromDate" data-target-input="nearest">
-                                                <input autocomplete="off" th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <input autocomplete="off" disabled th:value="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
                                                 <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -211,14 +208,14 @@
                                         <div class="form-group">
                                             <label>Tên phòng ban:</label>
                                             <input type="text" class="form-control" disabled
-                                                   th:value="${session.user.department.getDeptName()}" >
+                                                   th:value="${dto.user.department.deptName}" >
                                         </div>
                                         <!-- /.form-group -->
 
                                         <div class="form-group">
                                             <label>Đến ngày:</label>
                                             <div autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
-                                                <input th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                                <input th:value="*{toDate}" disabled type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
                                                 <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -245,14 +242,16 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Lý do nghỉ:</label>
-                                            <textarea th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
+                                            <textarea disabled th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
                                         </div>
                                         <!-- textarea -->
                                     </div>
                                 </div>
 
+                                <a onclick="window.history.go(-1);" class="btn btn-warning float-right"><i class="fa fa-chevron-left"></i>&nbsp;Quay lại</a>
+                                <a id="denyBtn" style="margin-right: 7px" class="btn btn-danger float-right"><i class="fa fa-ban"></i>&nbsp;Từ chối</a>
+                                <a id="confirmBtn" style="margin-right: 7px" class="btn btn-primary float-right"><i class="fa fa-pen-alt"></i>&nbsp;Duyệt</a>
 
-                                <button type="submit" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</button>
                             </div>
                             <!-- /.card-body -->
                         </form>
@@ -278,6 +277,38 @@
                 // format: 'L'
             })
         });
+
+        $('#denyBtn').click(function (){
+            var id = $('#id').val();
+            $.ajax({
+                url: '/request/changeStatus/' + id + '/4',
+                method: "GET",
+                success : function (data) {
+                    if(data == '200'){
+                        toastr.success("Thao tác thành công");
+                        $('#denyBtn').off('click');
+                        $('#confirmBtn').off('click');
+                    } else
+                        toastr.error('Thao tác thất bại')
+                }
+            })
+        })
+
+        $('#confirmBtn').click(function (){
+            var id = $('#id').val();
+            $.ajax({
+                url: '/request/changeStatus/' + id + '/2',
+                method: "GET",
+                success : function (data) {
+                    if(data == '200'){
+                        toastr.success("Thao tác thành công");
+                        $('#denyBtn').off('click');
+                        $('#confirmBtn').off('click');
+                    } else
+                        toastr.error('Thao tác thất bại')
+                }
+            })
+        })
     </script>
 
 </th:block>

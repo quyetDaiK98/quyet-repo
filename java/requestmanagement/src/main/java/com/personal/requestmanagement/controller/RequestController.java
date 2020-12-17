@@ -32,12 +32,9 @@ public class RequestController {
     UserService userService;
 	
     @GetMapping("")
+    @Secured(CommonConst.ROLE_EMP)
     public String list(Model model, @Valid SearchRequest searchDto, Errors errors){
         ThymeleafUtil.insertContent(model, "fragments/request", "list", "Danh sách đề nghị", "Đề nghị cá nhân");
-
-        model.addAttribute("status", CommonConst.REQUEST_STATUS);
-
-        model.addAttribute("type", CommonConst.REQUEST_TYPE);
 
         model.addAttribute("searchDto", searchDto);
 
@@ -57,10 +54,12 @@ public class RequestController {
     public String info(Model model, RedirectAttributes redirAttrs, @RequestParam(name = "id") Long id){
         id = id == null ? 0 : id;
         RequestDto dto = requestService.findOneDto(id);
+        model.addAttribute("statusStr", dto != null ? dto.getStatusStr() : "");
         return this.leave(model, dto);
     }
 
     @GetMapping("/del")
+    @Secured(CommonConst.ROLE_EMP)
     public String delete(Model model, RedirectAttributes redirAttrs, @RequestParam(name = "id") Long id){
         id = id == null ? 0 : id;
         if(requestService.remove(id))
@@ -72,7 +71,7 @@ public class RequestController {
     }
     
     @GetMapping("/leave")
-    @Secured("ROLE_EMP")
+    @Secured(CommonConst.ROLE_EMP)
     public String leave(Model model, RequestDto dto){
         ThymeleafUtil.insertContent(model, "fragments/request", "leave", "Đề nghị xin nghỉ phép", "Đề nghị cá nhân");
 
@@ -85,12 +84,13 @@ public class RequestController {
     }
     
     @PostMapping("/leave/save")
+    @Secured(CommonConst.ROLE_EMP)
     public String leaveSave(Model model, @ModelAttribute @Valid RequestDto dto, Errors errors, RedirectAttributes redirAttrs){
     	if(errors != null && errors.getErrorCount() == 0 && requestService.save(dto)){
             ThymeleafUtil.successMessage(redirAttrs);
             return "redirect:/request";
         }
-    	
+
     	if(errors != null && errors.getErrorCount() > 0){
     		ThymeleafUtil.errorMessages(model, errors);
     	} else ThymeleafUtil.errorMessage(model);
@@ -98,49 +98,14 @@ public class RequestController {
         return this.leave(model, dto);
 
     }
-    
-    @GetMapping("/manager")
-    public String list4Manager(Model model, @Valid SearchRequest searchDto, Errors errors){
-        ThymeleafUtil.insertContent(model, "fragments/confirmRequest", "list", "Danh sách đề nghị", "Đề nghị phê duyệt");
 
-        model.addAttribute("status", CommonConst.REQUEST_STATUS);
+    @ResponseBody
+    @GetMapping("changeStatus/{reqId}/{status}")
+    public String changeStatus(@PathVariable("reqId") int reqId, @PathVariable("status") int status){
+        if(requestService.changeStatus(reqId, status))
+            return String.valueOf(CommonConst.SUCCESS_ACTION_CODE);
 
-        model.addAttribute("type", CommonConst.REQUEST_TYPE);
-
-        model.addAttribute("searchDto", searchDto);
-
-        User user = userService.getCurrentUser();
-
-        searchDto.setRole(((Role) user.getRoles().toArray()[0]).getRoleCode());
-        searchDto.setUserId(user.getId());
-        searchDto.setDeptId(user.getDepartment() != null ? user.getDepartment().getId() : 0);
-
-        List<RequestDto> list = requestService.getAllDto(searchDto);
-        model.addAttribute("list", list);
-        ThymeleafUtil.errorMessages(model, errors);
-        return "index";
+        return String.valueOf(CommonConst.ERROR_ACTION_CODE);
     }
     
-    @GetMapping("/operator")
-    public String list4Operator(Model model, @Valid SearchRequest searchDto, Errors errors){
-        ThymeleafUtil.insertContent(model, "fragments/processRequest", "list", "Danh sách đề nghị", "Đề nghị xử lý");
-
-        model.addAttribute("status", CommonConst.REQUEST_STATUS);
-
-        model.addAttribute("type", CommonConst.REQUEST_TYPE);
-
-        model.addAttribute("searchDto", searchDto);
-
-        User user = userService.getCurrentUser();
-
-        searchDto.setRole(((Role) user.getRoles().toArray()[0]).getRoleCode());
-        searchDto.setUserId(user.getId());
-        searchDto.setDeptId(user.getDepartment() != null ? user.getDepartment().getId() : 0);
-
-        List<RequestDto> list = requestService.getAllDto(searchDto);
-        model.addAttribute("list", list);
-        ThymeleafUtil.errorMessages(model, errors);
-        return "index";
-    }
-
 }
