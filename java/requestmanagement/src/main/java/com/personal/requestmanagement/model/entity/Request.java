@@ -1,11 +1,9 @@
 package com.personal.requestmanagement.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 //@Getter
 //@Setter
@@ -46,6 +44,16 @@ public class Request implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@JoinTable(
+		name = "user_role",
+		joinColumns = @JoinColumn(name = "req_id"), 
+  	    inverseJoinColumns = @JoinColumn(name = "mat_id"))
+	private Set<Material> materials;
+    
+    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
+	private Set<RequestMaterial> material;
 
 	public long getId() {
 		return id;
@@ -97,6 +105,14 @@ public class Request implements Serializable {
 
 	public Date getToDate() {
 		return toDate;
+	}
+	
+	public Set<Material> getMaterials() {
+		return materials;
+	}
+
+	public void setMaterials(Set<Material> materials) {
+		this.materials = materials;
 	}
 
 	public void setToDate(Date toDate) {
