@@ -93,6 +93,7 @@
                                 <thead class="center">
                                 <tr>
                                     <th>Id</th>
+                                    <th>Tên nhân viên</th>
                                     <th>Ngày đề nghị</th>
                                     <th>loại đề nghị</th>
                                     <th>Trạng thái</th>
@@ -102,6 +103,7 @@
                                 <tbody>
                                 <tr th:if="${list != null && !list.empty}" th:each="record : ${list}">
                                     <td class="center" th:text="${record.id}"></td>
+                                    <td class="center" th:text="${record.user.userName}"></td>
                                     <td class="center" th:text="${record.createdDate}"></td>
                                     <td th:text="${type[__${record.type}__]}"></td>
                                     <td th:text="${status[__${record.status}__]}"></td>

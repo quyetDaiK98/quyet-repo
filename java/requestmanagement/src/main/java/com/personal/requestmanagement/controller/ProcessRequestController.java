@@ -29,7 +29,7 @@ public class ProcessRequestController {
     UserService userService;
 
     @GetMapping("")
-    @Secured(CommonConst.ROLE_MANAGER)
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String list4Manager(Model model, @Valid SearchRequest searchDto, Errors errors){
         ThymeleafUtil.insertContent(model, "fragments/processRequest", "list", "Danh sách đề nghị", "Đề nghị xử lý");
 
@@ -52,7 +52,7 @@ public class ProcessRequestController {
     }
 
     @GetMapping("/save")
-    @Secured(CommonConst.ROLE_MANAGER)
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String processLeave(Model model, RequestDto dto, @RequestParam(name = "id") Long id){
         ThymeleafUtil.insertContent(model, "fragments/processRequest", "leave", "Đề nghị xin nghỉ phép", "Đề nghị xử lý");
 
@@ -65,7 +65,7 @@ public class ProcessRequestController {
     }
 
     @PostMapping("/doSave")
-    @Secured(CommonConst.ROLE_MANAGER)
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String leaveSave(Model model, @ModelAttribute @Valid RequestDto dto, Errors errors, RedirectAttributes redirAttrs){
         if(errors != null && errors.getErrorCount() == 0 && requestService.save(dto)){
             ThymeleafUtil.successMessage(redirAttrs);

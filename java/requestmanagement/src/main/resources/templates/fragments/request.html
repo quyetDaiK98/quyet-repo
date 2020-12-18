@@ -107,7 +107,7 @@
                                     <td th:text="${record.statusStr}"></td>
                                     <td class="center">
                                         <a th:href="@{/request/info(id=${record.id})}" title="Chi tiết" class="icn"><i class="fas fa-search"></i></a>
-                                        <a th:href="@{/request/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Hủy"><i class="fas fa-trash-alt"></i></a>
+                                        <a th:if="${record.status == 1}" th:href="@{/request/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="icn" title="Hủy"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -271,6 +271,110 @@
     </script>
 
 </th:block>
+
+<th:block th:fragment="info">
+    <!-- daterange picker -->
+    <link rel="stylesheet" th:href="@{/plugins/daterangepicker/daterangepicker.css}">
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Chi tiết đề nghị xin nghỉ phép</h3>
+                            <div style="color: red" class="text-right" th:text="${statusStr}"></div>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:object="${dto}">
+                            <input type="hidden" th:field="*{id}">
+                            <input type="hidden" name="user.id" th:value="${session.user.getId()}">
+                            <input type="hidden" name="type" value="1">
+                            <input type="hidden" name="status" value="1">
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tên nhân viên:</label>
+                                            <input type="text" class="form-control" disabled
+                                                   th:value="${dto.user.userName}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Từ ngày:</label>
+                                            <div class="input-group date" id="fromDate" data-target-input="nearest">
+                                                <input disabled autocomplete="off" th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.form group -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tên phòng ban:</label>
+                                            <input type="text" class="form-control" disabled
+                                                   th:value="${dto.user.department.deptName}" >
+                                        </div>
+                                        <!-- /.form-group -->
+
+                                        <div class="form-group">
+                                            <label>Đến ngày:</label>
+                                            <div disabled autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
+                                                <input th:disabled="*{status != 0}" th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                                <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.form group -->
+
+                                    </div>
+                                    <!-- /.col -->
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Lý do nghỉ:</label>
+                                            <textarea disabled th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
+                                        </div>
+                                        <!-- textarea -->
+                                    </div>
+                                </div>
+
+                                <a type="button" onclick="window.history.go(-1);" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- date-range-picker -->
+    <script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+
+    <script>
+        $(function () {
+            $('.date').datetimepicker({
+                icons: {
+                    time: "fas fa-clock"
+                },
+                showClear : true,
+                format : 'DD/MM/YYYY, HH:mm'
+                // timePicker: true,
+                // format: 'L'
+            })
+        });
+    </script>
+
+</th:block>
+
 
 
 </body>

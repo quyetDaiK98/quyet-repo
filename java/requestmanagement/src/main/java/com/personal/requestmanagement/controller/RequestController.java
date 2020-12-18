@@ -52,17 +52,22 @@ public class RequestController {
 
     @GetMapping("/info")
     public String info(Model model, RedirectAttributes redirAttrs, @RequestParam(name = "id") Long id){
+        ThymeleafUtil.insertContent(model, "fragments/request", "info", "Chi tiết đề nghị xin nghỉ phép", "Chi tiết đề nghị");
+
         id = id == null ? 0 : id;
         RequestDto dto = requestService.findOneDto(id);
+        model.addAttribute("dto", dto == null ? new RequestDto() : dto);
+
         model.addAttribute("statusStr", dto != null ? dto.getStatusStr() : "");
-        return this.leave(model, dto);
+
+        return "index";
     }
 
     @GetMapping("/del")
     @Secured(CommonConst.ROLE_EMP)
     public String delete(Model model, RedirectAttributes redirAttrs, @RequestParam(name = "id") Long id){
         id = id == null ? 0 : id;
-        if(requestService.remove(id))
+        if(requestService.changeStatus(Math.toIntExact(id), 6))
             ThymeleafUtil.successMessage(redirAttrs);
         else
             ThymeleafUtil.errorMessage(redirAttrs);

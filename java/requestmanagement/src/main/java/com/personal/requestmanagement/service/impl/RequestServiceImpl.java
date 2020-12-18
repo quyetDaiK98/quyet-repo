@@ -34,7 +34,7 @@ public class RequestServiceImpl implements RequestService {
 	public List<RequestDto> getAllDto(SearchRequest searchDto) {
 		// TODO Auto-generated method stub
 		StringBuilder hql = new StringBuilder(
-				"select new com.personal.requestmanagement.model.dto.RequestDto(entity) from Request entity where 1=1 ");
+				"select new com.personal.requestmanagement.model.dto.RequestDto(entity) from Request entity where entity.status != 6 ");
 
 		if (searchDto.getType() > 0)
 			hql.append(" and entity.type = :type ");
@@ -52,10 +52,12 @@ public class RequestServiceImpl implements RequestService {
 			hql.append(" and entity.user.id = :userId");
 
 		if (searchDto.getRole().equals("ROLE_MANAGER"))
-			hql.append(" and entity.user.department.id = :deptId and entity.status in (1,2,4) ");
+			hql.append(" and entity.user.department.id = :deptId and entity.status in (1,2,4,5) ");
 
 		if (searchDto.getRole().equals("ROLE_OPERATOR"))
 			hql.append(" and entity.status in (2,3,5) ");
+
+		hql.append(" order by entity.createdDate desc");
 
 		try {
 			Query query = entityManager.createQuery(hql.toString(), RequestDto.class);
