@@ -45,14 +45,7 @@ public class Request implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-	@JoinTable(
-		name = "user_role",
-		joinColumns = @JoinColumn(name = "req_id"), 
-  	    inverseJoinColumns = @JoinColumn(name = "mat_id"))
-	private Set<Material> materials;
-    
-    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<RequestMaterial> material;
 
 	public long getId() {
@@ -107,12 +100,12 @@ public class Request implements Serializable {
 		return toDate;
 	}
 	
-	public Set<Material> getMaterials() {
-		return materials;
+	public Set<RequestMaterial> getMaterial() {
+		return material;
 	}
 
-	public void setMaterials(Set<Material> materials) {
-		this.materials = materials;
+	public void setMaterial(Set<RequestMaterial> material) {
+		this.material = material;
 	}
 
 	public void setToDate(Date toDate) {

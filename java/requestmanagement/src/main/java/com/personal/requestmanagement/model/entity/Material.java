@@ -21,13 +21,13 @@ public class Material implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "role_name", unique = true)
+	@Column(name = "mat_code", unique = true)
 	private String matCode;
 	
-	@Column(name = "role_name")
+	@Column(name = "mat_Name")
 	private String matName;
 	
-	@Column(name = "role_name")
+	@Column(name = "unit")
 	private String unit;
 
 	public int getId() {
