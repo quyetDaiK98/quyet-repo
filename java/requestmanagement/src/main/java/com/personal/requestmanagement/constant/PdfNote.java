@@ -8,6 +8,8 @@ public enum PdfNote {
 	MANAGER("manager", "manager"),
 	USERNAME("userName", "userName"),
 	DEPTNAME("deptName", "deptName"),
+	NEWLINE("---", "Sử dụng cho ghi chú"),
+	CREATEDDATE("createdDate", "createdDate"),
 	REASON("reason", "reason");
     
 

@@ -27,6 +27,10 @@ public class UserDto {
     private DepartmentDto department;
     
     private String email;
+    
+    private String sign;
+    
+    private String phone;
 
 	public String getRoleCode() {
 		return roleCode;
@@ -100,7 +104,21 @@ public class UserDto {
 		return email;
 	}
 
+	public String getSign() {
+		return sign;
+	}
 
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -117,6 +135,9 @@ public class UserDto {
     	this.id = entity.getId();
     	
     	this.userName = entity.getUsername();
+    	
+    	this.sign = entity.getSign();
+    	this.phone = entity.getPhone();
     	
     	if(entity.getRoles() != null && !entity.getRoles().isEmpty()) {
     		List<String> roleCodes = new ArrayList<String>();

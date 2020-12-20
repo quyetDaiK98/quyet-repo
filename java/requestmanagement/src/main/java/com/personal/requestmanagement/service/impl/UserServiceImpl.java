@@ -67,6 +67,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 		entity.setUserName(dto.getUserName());
 		entity.setEmail(dto.getEmail());
+		entity.setSign(dto.getSign());
+		entity.setPhone(dto.getPhone());
 		
 		if(dto.getRoleCodes() != null && dto.getRoleCodes().size() > 0) {
 			Set<Role> roles = new HashSet<>();

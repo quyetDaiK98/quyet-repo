@@ -33,6 +33,12 @@ public class User implements Serializable, UserDetails {
 
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "sign")
+	private String sign;
+	
+	@Column(name = "phone")
+	private String phone;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -113,6 +119,22 @@ public class User implements Serializable, UserDetails {
 
 	public Set<Role> getRoles() {
 		return roles;
+	}
+	
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public void setRoles(Set<Role> roles) {

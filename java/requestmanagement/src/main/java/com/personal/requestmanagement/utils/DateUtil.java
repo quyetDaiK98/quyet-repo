@@ -42,6 +42,16 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(cal.getTime());
 	}
+	
+	public static String convertDatetoString(Date input, String format){
+        try {
+            SimpleDateFormat formater = new SimpleDateFormat(format);
+            String date = formater.format(input);
+            return date;
+        } catch (Exception e){
+            return null;
+        }
+    }
 
 	public static Date now() {
 		Calendar cal = Calendar.getInstance();
