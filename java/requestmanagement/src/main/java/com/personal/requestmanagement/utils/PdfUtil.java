@@ -39,9 +39,7 @@ public class PdfUtil {
                                         String vitri = data.getData().get(j).getName();
                                         if(content.trim().equalsIgnoreCase(vitri.trim())){
                                             PDRectangle pDRectangle = pDAnnotation.getRectangle();
-//                                            PDFont pdfFont = PDType0Font.load(doc, new File(appConfig.getStringCfByKey("url.public.font")));
-                                            PDFont pdfFont = PDType0Font.load(doc, new File(""));
-                                            //PDFont pdfFont = PDType1Font.TIMES_BOLD;
+                                            PDFont pdfFont = PDType0Font.load(doc, new File("C:\\Users\\ADM\\Desktop\\Git\\quyet-repo\\java\\requestmanagement\\src\\main\\resources\\static\\times.ttf"));
                                             int fontSize = 12;
                                             PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND,true,true);
                                             //Write text in the PDF document
