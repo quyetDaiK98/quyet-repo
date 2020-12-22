@@ -375,6 +375,257 @@
 
 </th:block>
 
+<th:block th:fragment="mat">
+    <!-- daterange picker -->
+    <link rel="stylesheet" th:href="@{/plugins/daterangepicker/daterangepicker.css}">
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Đề nghị vật tư</h3>
+                            <div style="color: red" class="text-right" th:text="${statusStr}"></div>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:object="${dto}">
+                            <input type="hidden" th:field="*{id}">
+                            <input type="hidden" name="user.id" th:value="${session.user.getId()}">
+                            <input type="hidden" name="type" value="1">
+                            <input type="hidden" name="status" value="1">
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tên nhân viên:</label>
+                                            <input type="text" class="form-control" disabled
+                                                   th:value="${session.user.userName}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Từ ngày:</label>
+                                            <div class="input-group date" id="fromDate" data-target-input="nearest">
+                                                <input id="from" th:disabled="*{status != 0}" autocomplete="off" th:field="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Vật tư:</label>
+                                            <select id="mat" class="form-control select2" style="width: 100%;">
+                                                <option th:if="${list != null && !list.empty}" th:each="entry : ${list}" th:value="${entry.id}" th:text="${entry.matName}"></option>
+                                            </select>
+                                        </div>
+                                        <!-- /.form group -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tên phòng ban:</label>
+                                            <input type="text" class="form-control" disabled
+                                                   th:value="${session.user.department.getDeptName()}" >
+                                        </div>
+                                        <!-- /.form-group -->
+
+                                        <div class="form-group">
+                                            <label>Đến ngày:</label>
+                                            <div th:disabled="*{status != 0}" autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
+                                                <input id="to" th:disabled="*{status != 0}" th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                                <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Số lượng:</label>
+                                            <input type="number" class="form-control" id="number">
+                                        </div>
+                                        <!-- /.form group -->
+
+                                    </div>
+                                    <!-- /.col -->
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Lý do:</label>
+                                            <textarea id="reason" th:disabled="*{status != 0}" th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
+                                        </div>
+                                        <!-- textarea -->
+                                    </div>
+
+                                </div>
+
+                                <!--                                <a th:if="*{status != 0}" th:href="@{/request}" type="button" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>-->
+                                <a type="button" onclick="window.history.go(-1);" class="btn btn-warning float-right"><i class="icn fas fa-backward"></i>Quay lại</a>
+
+                                <a style="margin-right: 7px" th:if="*{status == 0}" id="send" class="btn btn-primary float-right"><i class="icn fas fa-save"></i>Lưu</a>
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="box-header" style="padding-left: 0px;padding-bottom: 0px;
+                padding-right: 0px;">
+                            <div class="col-12">
+                                <label>
+                                    Danh sách vật tư
+                                </label>
+                                <button th:if="${status == 0}" style="float: right" id="add"  class="btn btn-primary">
+                                    <i class="fa fa-plus"></i> Thêm
+                                </button>
+<!--                                <button th:if="${status == 0}" style="float: right" id="rm" class="btn btn-danger">-->
+<!--                                    <i class="fa fa-minus"></i> Xóa-->
+<!--                                </button>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="box-body" style="padding-left: 15px;padding-top: 0px;
+                        padding-right: 15px;">
+                                    <table id="table" class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th class="center">STT</th>
+                                            <th class="center">ID vật tư</th>
+<!--                                            <th>Mã vật tư</th>-->
+<!--                                            <th>Tên vật tư </th>-->
+<!--                                            <th>Đơn vị</th>-->
+                                            <th class="center">Số lượng</th>
+<!--                                            <th>Thao tác</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:if="${listMat != null && !listMat.empty}" th:each="record : ${listMat}">
+                                            <td class="center" th:text="${record.index}"></td>
+                                            <td class="center" th:text="${record.id}"></td>
+<!--                                            <td th:text="${record.material.matCode}"></td>-->
+<!--                                            <td th:text="${record.material.matName}"></td>-->
+<!--                                            <td th:text="${record.material.unit}"></td>-->
+                                            <td class="center" th:text="${record.quantity}"></td>
+<!--                                            <td class="center">-->
+<!--                                                <a data-toggle="tooltip" style="cursor: pointer" title="Xóa"><i class="fa fa-trash-o"></i></a>-->
+<!--                                            </td>-->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- date-range-picker -->
+    <script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+
+    <!-- DataTables -->
+<!--    <script th:src="@{/dist/js/datatables.net/js/jquery.dataTables.min.js}"></script>-->
+<!--    <script th:src="@{/dist/js/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>-->
+    <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+    <script>
+        $(function () {
+            var table = $('#table').DataTable({
+                'paging': false,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': false,
+                'info': false,
+                'autoWidth': false
+            });
+
+            $('.date').datetimepicker({
+                icons: {
+                    time: "fas fa-clock"
+                },
+                showClear : true,
+                format : 'DD/MM/YYYY, HH:mm'
+                // timePicker: true,
+                // format: 'L'
+            })
+
+            $('#send').click(function (){
+                var param = {};
+                param.status = 1;
+                param.reason = $('#reason').val();
+                param.fromDate = $('#from').val();
+                param.toDate = $('#to').val();
+                param.type = 2;
+                param.matIds = [];
+                param.quantities = [];
+                param.requestMaterialDtos = [];
+                table.rows().every(function ( rowIdx, tableLoop, rowLoop ) {
+                    // var reqMat = {};
+                    // reqMat.material = {};
+                    // var data = this.data();
+                    //
+                    // var material = {};
+                    // material.id = data[1];
+                    // reqMat.material = material;
+                    // reqMat.quantity = data[2];
+                    // param.requestMaterialDtos.push(mat);
+                    var data = this.data();
+                    param.matIds.push(data[1]);
+                    param.quantities.push(data[2]);
+                });
+                $.ajax({
+                    url: "/request/mat/save",
+                    contentType: "application/json",
+                    method: "POST",
+                    data:
+                         JSON.stringify(param)
+                    ,
+                    success : function (data) {
+                        if(data == '200'){
+                            window.location = "/request"
+                        } else
+                            toastr.error('Thao tác thất bại')
+                    }
+                })
+            })
+
+            $('#add').click(function (){
+                if($('#number').val() == 0){
+                    toastr.error("Chưa nhập số lượng!");
+                    return;
+                }
+                var currIndex = 1;
+
+                try {
+                    currIndex = parseInt(table.row(':last').data()[0]) + 1;
+                } catch (e) {
+                }
+
+                var rowAdded = table.row.add([
+                    currIndex,
+                    $('#mat').val(),
+                    $('#number').val()
+                ]).draw();
+                table.row(rowAdded).column(0).nodes().to$().addClass('center');
+                table.row(rowAdded).column(1).nodes().to$().addClass('center');
+                table.row(rowAdded).column(2).nodes().to$().addClass('center');
+            })
+        });
+    </script>
+
+</th:block>
+
 
 
 </body>

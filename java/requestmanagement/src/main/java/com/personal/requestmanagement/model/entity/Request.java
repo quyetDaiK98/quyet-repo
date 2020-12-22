@@ -3,6 +3,7 @@ package com.personal.requestmanagement.model.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 //@Getter
@@ -46,7 +47,7 @@ public class Request implements Serializable {
     private Date createdDate;
     
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<RequestMaterial> material;
+	private List<RequestMaterial> material;
 
 	public long getId() {
 		return id;
@@ -100,11 +101,11 @@ public class Request implements Serializable {
 		return toDate;
 	}
 	
-	public Set<RequestMaterial> getMaterial() {
+	public List<RequestMaterial> getMaterial() {
 		return material;
 	}
 
-	public void setMaterial(Set<RequestMaterial> material) {
+	public void setMaterial(List<RequestMaterial> material) {
 		this.material = material;
 	}
 

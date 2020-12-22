@@ -3,7 +3,8 @@ package com.personal.requestmanagement.model.dto;
 import com.personal.requestmanagement.model.entity.RequestMaterial;
 
 public class RequestMaterialDto {
-	
+	private int index;
+
 	private int id;
 	
 	private MaterialDto material;
@@ -43,7 +44,15 @@ public class RequestMaterialDto {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public RequestMaterialDto() {}
 	
 	public RequestMaterialDto(RequestMaterial entity) {

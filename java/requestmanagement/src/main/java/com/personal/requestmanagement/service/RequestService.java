@@ -8,8 +8,8 @@ import com.personal.requestmanagement.model.search.SearchRequest;
 public interface RequestService {
 	
 	List<RequestDto> getAllDto(SearchRequest searchDto);
-	
-	boolean save(RequestDto dto);
+
+	RequestDto save(RequestDto dto);
 	
 	boolean remove(long id);
 	

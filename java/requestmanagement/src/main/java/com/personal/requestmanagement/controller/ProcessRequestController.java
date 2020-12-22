@@ -67,7 +67,7 @@ public class ProcessRequestController {
     @PostMapping("/doSave")
     @Secured(CommonConst.ROLE_OPERATOR)
     public String leaveSave(Model model, @ModelAttribute @Valid RequestDto dto, Errors errors, RedirectAttributes redirAttrs){
-        if(errors != null && errors.getErrorCount() == 0 && requestService.save(dto)){
+        if(errors != null && errors.getErrorCount() == 0 && requestService.save(dto) != null){
             ThymeleafUtil.successMessage(redirAttrs);
             return "redirect:/request";
         }

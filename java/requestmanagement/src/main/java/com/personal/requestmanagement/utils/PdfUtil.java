@@ -18,6 +18,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 
+import com.personal.requestmanagement.constant.CommonConst;
 import com.personal.requestmanagement.constant.PdfNote;
 import com.personal.requestmanagement.model.pdf.Template;
 
@@ -42,7 +43,7 @@ public class PdfUtil {
                                 String content = pDAnnotation.getContents();
                                 if(content != null){
                                     PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND,true,true);
-                                    PDFont pdfFont = PDType0Font.load(doc, new File("C:\\Users\\quyet.nguyenvan\\eclipse-workspace\\quyet-repo\\java\\requestmanagement\\src\\main\\resources\\static\\times.ttf"));
+                                    PDFont pdfFont = PDType0Font.load(doc, new File(CommonConst.ROOT_PATH + "\\src\\main\\resources\\static\\times.ttf"));
                                     contents.setFont(pdfFont, fontSize);
                                     contents.beginText();
                                     contents.setLeading(fontSize);

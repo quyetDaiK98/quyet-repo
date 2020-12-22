@@ -1,8 +1,13 @@
 package com.personal.requestmanagement.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.personal.requestmanagement.model.dto.RequestMaterialDto;
+import com.personal.requestmanagement.model.entity.Material;
+import com.personal.requestmanagement.model.entity.RequestMaterial;
 import com.personal.requestmanagement.model.search.SearchRequest;
+import com.personal.requestmanagement.repository.RequestMaterialRepo;
 import com.personal.requestmanagement.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +33,9 @@ public class RequestServiceImpl implements RequestService {
 
 	@Autowired
 	EntityManager entityManager;
+
+	@Autowired
+	RequestMaterialRepo requestMaterialRepo;
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -94,7 +102,7 @@ public class RequestServiceImpl implements RequestService {
 	}
 
 	@Override
-	public boolean save(RequestDto dto) {
+	public RequestDto save(RequestDto dto) {
 		// TODO Auto-generated method stub
 		Request entity = null;
 		if (dto.getId() > 0)
@@ -107,17 +115,44 @@ public class RequestServiceImpl implements RequestService {
 		entity.setStatus(dto.getStatus());
 		entity.setType(dto.getType());
 
+
+//		entity.setMaterial(requestMaterials);
+
+//		if(dto.getRequestMaterialDtos() != null && dto.getRequestMaterialDtos().size() > 0){
+//			List<RequestMaterial> requestMaterials = new ArrayList<>();
+//			for (RequestMaterialDto requestMaterialDto : dto.getRequestMaterialDtos()){
+//				RequestMaterial requestMaterial = new RequestMaterial();
+//
+//				Material material = new Material();
+//				material.setId(requestMaterialDto.getMaterial().getId());
+//				requestMaterial.setMaterial(material);
+//
+//				requestMaterials.add(requestMaterial);
+//			}
+//			entity.setMaterial(requestMaterials);
+//		}
+
 		try {
 			entity.setUser(userRepository.getOne(dto.getUser().getId()));
 			entity.setFromDate(DateUtil.stringToDate(dto.getFromDate(), DateUtil.FORMAT_DDMMYYYY_HHMM));
 			entity.setToDate(DateUtil.stringToDate(dto.getToDate(), DateUtil.FORMAT_DDMMYYYY_HHMM));
-			requestRepository.save(entity);
-			return true;
+			Request request = requestRepository.save(entity);
+
+			for (int i = 0; i < dto.getMatIds().size(); i++) {
+				RequestMaterial requestMaterial = new RequestMaterial();
+				Material material = new Material();
+				material.setId(dto.getMatIds().get(i));
+				requestMaterial.setMaterial(material);
+				requestMaterial.setQuantity(dto.getQuantities().get(i));
+				requestMaterial.setRequest(request);
+				requestMaterialRepo.save(requestMaterial);
+			}
+			return new RequestDto(requestRepository.getOne(request.getId()));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		return false;
+		return null;
 	}
 
 	@Override

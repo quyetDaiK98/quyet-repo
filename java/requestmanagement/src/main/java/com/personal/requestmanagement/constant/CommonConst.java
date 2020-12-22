@@ -1,5 +1,6 @@
 package com.personal.requestmanagement.constant;
 
+import java.io.File;
 import java.util.HashMap;
 
 public class CommonConst {
@@ -24,6 +25,12 @@ public class CommonConst {
 	public static final String ROLE_EMP = "ROLE_EMP";
 
 	public static final String ROLE_MANAGER = "ROLE_MANAGER";
+	
+	public static final String ROOT_PATH;
+	
+	public static final String TEMPLATE_PATH;
+	
+	public static final String DOC_STORE_PATH;
 
 
 	static {
@@ -39,5 +46,9 @@ public class CommonConst {
 		REQUEST_TYPE = new HashMap<>();
 		REQUEST_TYPE.put(1, "Đề nghị xin nghỉ phép");
 		REQUEST_TYPE.put(2, "Đề nghị mua vật tư");
+		
+		ROOT_PATH = new File("").getAbsolutePath();
+		TEMPLATE_PATH = ROOT_PATH + "\\doc\\Template.pdf";
+		DOC_STORE_PATH = ROOT_PATH + "\\src\\main\\resources\\static\\user";
 	}
 }

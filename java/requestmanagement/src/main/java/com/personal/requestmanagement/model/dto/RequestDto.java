@@ -7,12 +7,16 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.personal.requestmanagement.model.entity.Request;
+import com.personal.requestmanagement.model.entity.RequestMaterial;
 import com.personal.requestmanagement.utils.DateUtil;
 import com.personal.requestmanagement.validate.annotation.DateConstraint;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //@Getter
 //@Setter
@@ -26,10 +30,14 @@ public class RequestDto {
 	private int status;
 
     private UserDto user;
-    
+
     private int type;
-    
-    @NotEmpty(message = "Lý do không được để trống !")
+
+    private List<Integer> matIds;
+
+	private List<Integer> quantities;
+
+	@NotEmpty(message = "Lý do không được để trống !")
     private String reason;
     
     @NotEmpty(message = "Thời gian từ không được để trống !")
@@ -43,6 +51,8 @@ public class RequestDto {
     private String typeStr;
 
     private String statusStr;
+
+    private List<RequestMaterialDto> requestMaterialDtos;
 
 	public String getTypeStr() {
 		switch (this.type){
@@ -110,13 +120,17 @@ public class RequestDto {
 		return user;
 	}
 
-
-
 	public void setUser(UserDto user) {
 		this.user = user;
 	}
 
+	public List<RequestMaterialDto> getRequestMaterialDtos() {
+		return requestMaterialDtos;
+	}
 
+	public void setRequestMaterialDtos(List<RequestMaterialDto> requestMaterialDtos) {
+		this.requestMaterialDtos = requestMaterialDtos;
+	}
 
 	public int getType() {
 		return type;
@@ -134,7 +148,21 @@ public class RequestDto {
 		return reason;
 	}
 
+	public List<Integer> getMatIds() {
+		return matIds;
+	}
 
+	public void setMatIds(List<Integer> matIds) {
+		this.matIds = matIds;
+	}
+
+	public List<Integer> getQuantities() {
+		return quantities;
+	}
+
+	public void setQuantities(List<Integer> quantities) {
+		this.quantities = quantities;
+	}
 
 	public void setReason(String reason) {
 		this.reason = reason;
@@ -207,5 +235,17 @@ public class RequestDto {
     		}
     		this.user = userDto;
     	}
+
+    	if(entity.getMaterial() != null && entity.getMaterial().size() > 0){
+    		List<RequestMaterialDto> requestMaterialDtos = new ArrayList<>();
+
+			for (int i = 0; i < entity.getMaterial().size(); i++) {
+				RequestMaterialDto requestMaterialDto = new RequestMaterialDto(entity.getMaterial().get(i));
+				requestMaterialDto.setIndex(i + 1);
+				requestMaterialDtos.add(requestMaterialDto);
+			}
+
+			this.requestMaterialDtos = requestMaterialDtos;
+		}
     }
 }
