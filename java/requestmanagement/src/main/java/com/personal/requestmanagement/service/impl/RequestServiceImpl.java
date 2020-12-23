@@ -7,6 +7,7 @@ import com.personal.requestmanagement.model.dto.RequestMaterialDto;
 import com.personal.requestmanagement.model.entity.Material;
 import com.personal.requestmanagement.model.entity.RequestMaterial;
 import com.personal.requestmanagement.model.search.SearchRequest;
+import com.personal.requestmanagement.repository.MaterialRepository;
 import com.personal.requestmanagement.repository.RequestMaterialRepo;
 import com.personal.requestmanagement.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ import com.personal.requestmanagement.utils.DateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
 public class RequestServiceImpl implements RequestService {
 
 	@Autowired
@@ -36,6 +39,9 @@ public class RequestServiceImpl implements RequestService {
 
 	@Autowired
 	RequestMaterialRepo requestMaterialRepo;
+
+	@Autowired
+	MaterialRepository materialRepository;
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -115,9 +121,6 @@ public class RequestServiceImpl implements RequestService {
 		entity.setStatus(dto.getStatus());
 		entity.setType(dto.getType());
 
-
-//		entity.setMaterial(requestMaterials);
-
 //		if(dto.getRequestMaterialDtos() != null && dto.getRequestMaterialDtos().size() > 0){
 //			List<RequestMaterial> requestMaterials = new ArrayList<>();
 //			for (RequestMaterialDto requestMaterialDto : dto.getRequestMaterialDtos()){
@@ -132,24 +135,33 @@ public class RequestServiceImpl implements RequestService {
 //			entity.setMaterial(requestMaterials);
 //		}
 
+		if(dto.getMatIds() != null && dto.getMatIds().size() > 0){
+			List<RequestMaterial> requestMaterials = new ArrayList<>();
+
+			for (int i = 0; i < dto.getMatIds().size(); i++) {
+				RequestMaterial requestMaterial = new RequestMaterial();
+
+				requestMaterial.setMaterial(materialRepository.getOne(dto.getMatIds().get(i)));
+
+				requestMaterial.setQuantity(dto.getQuantities().get(i));
+				requestMaterial.setRequest(entity);
+				requestMaterials.add(requestMaterialRepo.save(requestMaterial));
+			}
+
+			entity.setMaterial(requestMaterials);
+		}
+
 		try {
 			entity.setUser(userRepository.getOne(dto.getUser().getId()));
 			entity.setFromDate(DateUtil.stringToDate(dto.getFromDate(), DateUtil.FORMAT_DDMMYYYY_HHMM));
 			entity.setToDate(DateUtil.stringToDate(dto.getToDate(), DateUtil.FORMAT_DDMMYYYY_HHMM));
-			Request request = requestRepository.save(entity);
 
-			for (int i = 0; i < dto.getMatIds().size(); i++) {
-				RequestMaterial requestMaterial = new RequestMaterial();
-				Material material = new Material();
-				material.setId(dto.getMatIds().get(i));
-				requestMaterial.setMaterial(material);
-				requestMaterial.setQuantity(dto.getQuantities().get(i));
-				requestMaterial.setRequest(request);
-				requestMaterialRepo.save(requestMaterial);
-			}
-			return new RequestDto(requestRepository.getOne(request.getId()));
+			entity = requestRepository.save(entity);
+
+			return new RequestDto(entity);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		return null;

@@ -11,4 +11,7 @@ import com.personal.requestmanagement.model.entity.Material;
 public interface MaterialRepository extends JpaRepository<Material, Integer> {
 	@Query("select new com.personal.requestmanagement.model.dto.MaterialDto(entity) from Material entity")
     List<MaterialDto> findAllDto();
+
+    @Query("select new com.personal.requestmanagement.model.dto.MaterialDto(entity) from Material entity where entity.id = ?1")
+    MaterialDto findDtoById(int id);
 }

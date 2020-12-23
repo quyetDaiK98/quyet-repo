@@ -60,7 +60,7 @@ public class RequestMaterialDto {
 			return;
 		
 		this.id = entity.getId();
-		this.quantity = entity.getId();
+		this.quantity = entity.getQuantity();
 		
 		if(entity.getRequest() != null) {
 			RequestDto requestDto = new RequestDto();

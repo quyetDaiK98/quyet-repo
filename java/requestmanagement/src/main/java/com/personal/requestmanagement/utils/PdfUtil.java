@@ -128,6 +128,7 @@ public class PdfUtil {
                                             case "quantity":
                                                 contents.newLineAtOffset(pDRectangle.getLowerLeftX(),pDRectangle.getLowerLeftY() + 10 );
                                                 for(int j=0;j<data.getDtos().size();j++){
+                                                    int a = data.getDtos().get(j).getQuantity();
                                                     if(j==0){ contents.showText(String.valueOf(data.getDtos().get(j).getQuantity())); }
                                                     else{
                                                         contents.newLine();
@@ -152,6 +153,7 @@ public class PdfUtil {
             }
         } catch (Exception ex) {
             writed = false;
+            ex.printStackTrace();
         } finally {
             if (doc != null) {
                 doc.close();

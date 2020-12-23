@@ -218,8 +218,8 @@
 
                                         <div class="form-group">
                                             <label>Đến ngày:</label>
-                                            <div th:disabled="*{status != 0}" autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
-                                                <input th:disabled="*{status != 0}" th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                            <div th:disabled="*{status != 0}" class="input-group date" id="toDate" data-target-input="nearest">
+                                                <input th:disabled="*{status != 0}" autocomplete="off" th:field="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
                                                 <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -414,13 +414,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label>Vật tư:</label>
-                                            <select id="mat" class="form-control select2" style="width: 100%;">
-                                                <option th:if="${list != null && !list.empty}" th:each="entry : ${list}" th:value="${entry.id}" th:text="${entry.matName}"></option>
-                                            </select>
-                                        </div>
                                         <!-- /.form group -->
                                     </div>
                                     <!-- /.col -->
@@ -440,11 +433,6 @@
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Số lượng:</label>
-                                            <input type="number" class="form-control" id="number">
                                         </div>
                                         <!-- /.form group -->
 
@@ -476,53 +464,52 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="box-header" style="padding-left: 0px;padding-bottom: 0px;
-                padding-right: 0px;">
-                            <div class="col-12">
-                                <label>
-                                    Danh sách vật tư
-                                </label>
+                        <div class="box-header" >
+                            <div class="card-header">
+                                <h3 class="card-title">Danh sách vật tư</h3>
                                 <button th:if="${status == 0}" style="float: right" id="add"  class="btn btn-primary">
                                     <i class="fa fa-plus"></i> Thêm
                                 </button>
-<!--                                <button th:if="${status == 0}" style="float: right" id="rm" class="btn btn-danger">-->
-<!--                                    <i class="fa fa-minus"></i> Xóa-->
-<!--                                </button>-->
+                                <select id="mat" class="form-control select2" style="float: right;width: 300px;">
+                                    <option th:if="${list != null && !list.empty}" th:each="entry : ${list}" th:value="${entry.id}" th:text="${entry.matName}"></option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="box-body" style="padding-left: 15px;padding-top: 0px;
-                        padding-right: 15px;">
-                                    <table id="table" class="table table-bordered table-striped table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="center">STT</th>
-                                            <th class="center">ID vật tư</th>
-<!--                                            <th>Mã vật tư</th>-->
-<!--                                            <th>Tên vật tư </th>-->
-<!--                                            <th>Đơn vị</th>-->
-                                            <th class="center">Số lượng</th>
-<!--                                            <th>Thao tác</th>-->
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:if="${listMat != null && !listMat.empty}" th:each="record : ${listMat}">
-                                            <td class="center" th:text="${record.index}"></td>
-                                            <td class="center" th:text="${record.id}"></td>
-<!--                                            <td th:text="${record.material.matCode}"></td>-->
-<!--                                            <td th:text="${record.material.matName}"></td>-->
-<!--                                            <td th:text="${record.material.unit}"></td>-->
-                                            <td class="center" th:text="${record.quantity}"></td>
-<!--                                            <td class="center">-->
-<!--                                                <a data-toggle="tooltip" style="cursor: pointer" title="Xóa"><i class="fa fa-trash-o"></i></a>-->
-<!--                                            </td>-->
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="box-body">
+                                        <table id="table" class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="center">STT</th>
+                                                <th class="center">ID vật tư</th>
+                                                <th class="center">Mã vật tư</th>
+                                                <th class="center">Tên vật tư </th>
+                                                <th class="center">Đơn vị</th>
+                                                <th style="width: 6%" class="center">Số lượng</th>
+                                                <th class="center">Thao tác</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:if="${listMat != null && !listMat.empty}" th:each="record : ${listMat}">
+                                                <td class="center" th:text="${record.index}"></td>
+                                                <td class="center" th:text="${record.id}"></td>
+                                                <td th:text="${record.material.matCode}"></td>
+                                                <td th:text="${record.material.matName}"></td>
+                                                <td th:text="${record.material.unit}"></td>
+                                                <td class="center" th:text="${record.quantity}"></td>
+                                                <td class="center">
+                                                    <a data-toggle="tooltip" style="cursor: pointer" title="Xóa"><i class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+<!--                                </div>-->
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -571,18 +558,9 @@
                 param.quantities = [];
                 param.requestMaterialDtos = [];
                 table.rows().every(function ( rowIdx, tableLoop, rowLoop ) {
-                    // var reqMat = {};
-                    // reqMat.material = {};
-                    // var data = this.data();
-                    //
-                    // var material = {};
-                    // material.id = data[1];
-                    // reqMat.material = material;
-                    // reqMat.quantity = data[2];
-                    // param.requestMaterialDtos.push(mat);
                     var data = this.data();
                     param.matIds.push(data[1]);
-                    param.quantities.push(data[2]);
+                    param.quantities.push($('input', table.cell({ row: rowIdx, column: 5 }).node()).val());
                 });
                 $.ajax({
                     url: "/request/mat/save",
@@ -601,26 +579,43 @@
             })
 
             $('#add').click(function (){
-                if($('#number').val() == 0){
-                    toastr.error("Chưa nhập số lượng!");
-                    return;
-                }
-                var currIndex = 1;
 
-                try {
-                    currIndex = parseInt(table.row(':last').data()[0]) + 1;
-                } catch (e) {
-                }
+                $.ajax({
+                    url: "/material/get/" + $('#mat').val(),
+                    contentType: "application/json",
+                    method: "GET",
+                    success : function (data) {
+                        var currIndex = 1;
 
-                var rowAdded = table.row.add([
-                    currIndex,
-                    $('#mat').val(),
-                    $('#number').val()
-                ]).draw();
-                table.row(rowAdded).column(0).nodes().to$().addClass('center');
-                table.row(rowAdded).column(1).nodes().to$().addClass('center');
-                table.row(rowAdded).column(2).nodes().to$().addClass('center');
+                        try {
+                            currIndex = parseInt(table.row(':last').data()[0]) + 1;
+                        } catch (e) {
+                        }
+
+                        var rowAdded = table.row.add([
+                            currIndex,
+                            data.id,
+                            data.matCode,
+                            data.matName,
+                            data.unit,
+                            '<input type="number" min="1" class="form-control"">',
+                            '<a data-toggle="tooltip" style="cursor: pointer" title="Xóa"><i class="fa fa-trash-alt"></i></a>'
+                        ]).draw();
+                        table.row(rowAdded).column(0).nodes().to$().addClass('center');
+                        table.row(rowAdded).column(1).nodes().to$().addClass('center');
+                        table.row(rowAdded).column(5).nodes().to$().addClass('center')
+                        table.row(rowAdded).column(6).nodes().to$().addClass('center');
+                    }
+                })
             })
+
+            //Xóa vật tư
+            $('#table tbody').on('click', 'a:nth-of-type(1)', function () {
+                table.row($(this).parents('tr')).remove().draw();
+                table.rows().every(function (rowindex) {
+                    table.cell({row: rowindex, column: 0}).data(rowindex + 1);
+                });
+            });
         });
     </script>
 

@@ -149,7 +149,7 @@ public class RequestController {
         RequestDto requestDto = requestService.save(param);
         if(requestDto != null){
             Template template = new Template();
-            template.setDtos(requestMaterialRepo.findAllDto(requestDto.getId()));
+            template.setDtos(requestDto.getRequestMaterialDtos());
             List<PdfObject> lst = new ArrayList<>();
             lst.add(new PdfObject(PdfNote.CREATEDDATE.getValue(), DateUtil.convertDatetoString(DateUtil.now(), DateUtil.FORMAT_DATE_YYYY_MM_DD_HH_mm_ss)));
             lst.add(new PdfObject(PdfNote.USERNAME.getValue(), userDto.getUserName()));
@@ -162,7 +162,7 @@ public class RequestController {
             String templateFile = CommonConst.TEMPLATE_PATH;
             String filePath =  CommonConst.DOC_STORE_PATH + "\\" + userDto.getUserName() + "\\temp.pdf";
             PdfUtil.copyFile(CommonConst.TEMPLATE_PATH, filePath);
-            File filePdf = new File(templateFile);
+            File filePdf = new File(filePath);
             PdfUtil.fillTemplate(filePdf, template);
             return String.valueOf(CommonConst.SUCCESS_ACTION_CODE);
         }
