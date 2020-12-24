@@ -108,8 +108,8 @@
                                     <td th:text="${type[__${record.type}__]}"></td>
                                     <td th:text="${status[__${record.status}__]}"></td>
                                     <td class="center">
-                                        <a th:href="@{/request/info(id=${record.id})}" title="Chi tiết" class="icn"><i class="fas fa-search"></i></a>
-                                        <a th:if="${record.status} == 2" th:href="@{/processRequest/save(id=${record.id})}" title="Thao tác" class="icn"><i class="fas fa-pen-alt"></i></a>
+                                        <a th:href="@{/request/info(type=${record.type}, id=${record.id})}" title="Chi tiết" class="icn"><i class="fas fa-search"></i></a>
+                                        <a th:if="${record.status} == 2" th:href="@{/processRequest/save(type = ${record.type}, id=${record.id})}" title="Thao tác" class="icn"><i class="fas fa-pen-alt"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -294,6 +294,183 @@
                 }
             })
         })
+    </script>
+
+</th:block>
+
+<th:block th:fragment="mat">
+    <!-- daterange picker -->
+    <link rel="stylesheet" th:href="@{/plugins/daterangepicker/daterangepicker.css}">
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Đề nghị vật tư</h3>
+                            <div style="color: red" class="text-right" th:text="${statusStr}"></div>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:object="${dto}">
+                            <input type="hidden" id="id" th:value="*{id}">
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tên nhân viên:</label>
+                                            <input type="text" class="form-control" disabled
+                                                   th:value="${dto.user.userName}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Từ ngày:</label>
+                                            <div class="input-group date" id="fromDate" data-target-input="nearest">
+                                                <input id="from" disabled autocomplete="off" th:value="*{fromDate}" type="text" class="form-control datetimepicker-input" data-target="#fromDate"/>
+                                                <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.form group -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tên phòng ban:</label>
+                                            <input type="text" class="form-control" disabled
+                                                   th:value="${dto.user.department.deptName}" >
+                                        </div>
+                                        <!-- /.form-group -->
+
+                                        <div class="form-group">
+                                            <label>Đến ngày:</label>
+                                            <div disabled autocomplete="off" class="input-group date" id="toDate" data-target-input="nearest">
+                                                <input id="to" th:disabled="*{status != 0}" th:value="*{toDate}" type="text" class="form-control datetimepicker-input" data-target="#toDate"/>
+                                                <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.form group -->
+
+                                    </div>
+                                    <!-- /.col -->
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Lý do:</label>
+                                            <textarea id="reason" disabled th:field="*{reason}" class="form-control" rows="" placeholder="Enter ..."></textarea>
+                                        </div>
+                                        <!-- textarea -->
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="box-header" >
+                            <div class="card-header">
+                                <h3 class="card-title">Danh sách vật tư</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="box-body">
+                                        <table id="table" class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="center">STT</th>
+                                                <th class="center">ID vật tư</th>
+                                                <th class="center">Mã vật tư</th>
+                                                <th class="center">Tên vật tư </th>
+                                                <th class="center">Đơn vị</th>
+                                                <th style="width: 10%" class="center">Số lượng</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:if="${listMat != null && !listMat.empty}" th:each="record : ${listMat}">
+                                                <td class="center" th:text="${record.index}"></td>
+                                                <td class="center" th:text="${record.id}"></td>
+                                                <td th:text="${record.material.matCode}"></td>
+                                                <td th:text="${record.material.matName}"></td>
+                                                <td th:text="${record.material.unit}"></td>
+                                                <td class="center" th:text="${record.quantity}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--                                </div>-->
+                                </div>
+                            </div>
+                            <a onclick="window.history.go(-1);" class="btn btn-warning float-right"><i class="fa fa-chevron-left"></i>&nbsp;Quay lại</a>
+                            <a id="processBtn" style="margin-right: 7px" class="btn btn-primary float-right"><i class="nav-icon fas fa-fist-raised"></i>&nbsp;Xử lý</a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- date-range-picker -->
+    <script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+
+    <!-- DataTables -->
+    <!--    <script th:src="@{/dist/js/datatables.net/js/jquery.dataTables.min.js}"></script>-->
+    <!--    <script th:src="@{/dist/js/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>-->
+    <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+    <script>
+        $(function () {
+            var table = $('#table').DataTable({
+                'paging': false,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': false,
+                'info': false,
+                'autoWidth': false
+            });
+
+            $('.date').datetimepicker({
+                icons: {
+                    time: "fas fa-clock"
+                },
+                showClear : true,
+                format : 'DD/MM/YYYY, HH:mm'
+                // timePicker: true,
+                // format: 'L'
+            })
+
+            $('#processBtn').click(function (){
+                var id = $('#id').val();
+                $.ajax({
+                    url: '/request/changeStatus/' + id + '/5',
+                    method: "GET",
+                    success : function (data) {
+                        if(data == '200'){
+                            toastr.success("Thao tác thành công");
+                            $('#denyBtn').off('click');
+                            $('#processBtn').off('click');
+                        } else
+                            toastr.error('Thao tác thất bại')
+                    }
+                })
+            })
+        });
     </script>
 
 </th:block>

@@ -101,8 +101,8 @@ public class RequestServiceImpl implements RequestService {
 
 			List<RequestDto> ret = query.getResultList();
 			return ret;
-		} catch (Exception exception) {
-
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return null;
 	}
