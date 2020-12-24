@@ -33,6 +33,9 @@ public class User implements Serializable, UserDetails {
 
 	@Column(name = "email")
 	private String email;
+
+	@Column(name = "address")
+	private String address;
 	
 	@Column(name = "sign")
 	private String sign;
@@ -67,6 +70,14 @@ public class User implements Serializable, UserDetails {
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	@Override

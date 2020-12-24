@@ -1,9 +1,11 @@
 package com.personal.requestmanagement.controller;
 
+import com.personal.requestmanagement.constant.CommonConst;
 import com.personal.requestmanagement.model.dto.DepartmentDto;
 import com.personal.requestmanagement.service.DepartmentService;
 import com.personal.requestmanagement.utils.ThymeleafUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,6 +22,7 @@ public class DepartmentController {
     DepartmentService departmentService;
 
     @GetMapping("")
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String list(Model model, @RequestParam(name = "code", required = false, defaultValue = "") String code, @RequestParam(name = "name", required = false, defaultValue = "") String name){
         ThymeleafUtil.insertContent(model, "fragments/department", "list", "Danh sách phòng ban", "Quản lý phòng ban");
 
@@ -31,6 +34,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/save")
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String save(Model model, DepartmentDto dto){
         String title = dto.getId() == 0 ? "Thêm mới phòng ban" : "Chỉnh sửa phòng ban";
     	ThymeleafUtil.insertContent(model, "fragments/department", "save", title, "Quản lý phòng ban");
@@ -45,6 +49,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/save")
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String doSave(Model model, @ModelAttribute @Valid DepartmentDto dto, Errors errors, RedirectAttributes redirAttrs){
         if(errors != null && errors.getErrorCount() == 0 && departmentService.save(dto)){
             ThymeleafUtil.successMessage(redirAttrs);
@@ -59,6 +64,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/del")
+    @Secured(CommonConst.ROLE_OPERATOR)
     public String delete(Model model, RedirectAttributes redirAttrs, @RequestParam(name = "id") Long id){
         id = id == null ? 0 : id;
         if(departmentService.remove(id))
