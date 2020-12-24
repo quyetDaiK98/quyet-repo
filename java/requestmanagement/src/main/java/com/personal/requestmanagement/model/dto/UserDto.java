@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.personal.requestmanagement.model.entity.Role;
 import com.personal.requestmanagement.model.entity.User;
 
@@ -18,10 +20,12 @@ public class UserDto {
 
     private String password;
 
+    @NotEmpty(message = "Tên người dùng không được để trống!")
     private String userName;
 
     private List<String> roleCodes;
 
+    @NotEmpty(message = "Quyền người dùng không được để trống!")
     private String roleCode;
     
     private DepartmentDto department;

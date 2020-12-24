@@ -21,9 +21,11 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Mã người dùng:</label>
-                                            <input type="text" class="form-control" name="code"
-                                                   placeholder="Mã người dùng" th:value="${code}">
+                                            <label>Phòng ban:</label>
+                                            <select id="dept" name="deptId" class="form-control select2">
+                                                <option value=0>Chọn phòng ban</option>
+                                    			<option th:if="${listDept != null && !listDept.empty}" th:each="entry : ${listDept}" th:selected="${entry.id == deptId}" th:value="${entry.id}" th:text="${entry.deptName}"></option>
+                                			</select>
                                         </div>
                                         <!-- /.form-group -->
                                     </div>
@@ -31,8 +33,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tên người dùng:</label>
-                                            <input type="text" class="form-control" name="name"
-                                                   placeholder="Tên người dùng" th:value="${name}">
+                                            <input type="text" class="form-control" name="userName"
+                                                   placeholder="Tên người dùng" th:value="${userName}">
                                         </div>
                                         <!-- /.form-group -->
                                     </div>
@@ -57,17 +59,23 @@
                             <table id="table" class="table table-bordered table-hover">
                                 <thead class="center">
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Mã người dùng</th>
-                                    <th>Tên người dùng</th>
-                                    <th>Thao tác</th>
+                                    <th class="center">Id</th>
+                                    <th class="center">Tên người dùng</th>
+                                    <th class="center">Phòng ban</th>
+                                    <th class="center">Email</th>
+                                    <th class="center">Địa chỉ</th>
+                                    <th class="center">Số điện thoại</th>
+                                    <th class="center">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:if="${list != null && !list.empty}" th:each="record : ${list}">
                                     <td class="center" th:text="${record.id}"></td>
-                                    <td th:text="${record.deptCode}"></td>
-                                    <td th:text="${record.deptName}"></td>
+                                    <td th:text="${record.userName}"></td>
+                                    <td th:text="${record.department.deptName}"></td>
+                                    <td th:text="${record.email}"></td>
+                                    <td th:text="${record.address}"></td>
+                                    <td th:text="${record.phone}"></td>
                                     <td class="center">
                                         <a th:href="@{/user/save(id=${record.id})}" title="Chỉnh sửa" class="icn"><i class="fas fa-pen-alt"></i></a>
                                         <a th:href="@{/user/del(id=${record.id})}" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" title="Xóa"><i class="fas fa-trash-alt"></i></a>
@@ -124,18 +132,28 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Mã người dùng:</label>
-                                            <input type="text" class="form-control" name="code"
-                                                   placeholder="Mã người dùng" th:field="*{deptCode}">
+                                            <label>Tên đăng nhập:</label>
+                                            <input type="text" class="form-control" name="userName"
+                                                   placeholder="Tên đăng nhập" th:field="*{userName}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Số điện thoại:</label>
+                                            <input type="phone" class="form-control" name="phone"
+                                                   placeholder="Tên người dùng" th:field="*{phone}">
                                         </div>
                                         <!-- /.form-group -->
                                     </div>
                                     <!-- /.col -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Tên người dùng:</label>
-                                            <input type="text" class="form-control" name="name"
-                                                   placeholder="Tên người dùng" th:field="*{deptName}">
+                                            <label>Email:</label>
+                                            <input type="email" class="form-control" name="email"
+                                                   placeholder="Tên người dùng" th:field="*{email}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Địa chỉ:</label>
+                                            <input type="address" class="form-control" name="address"
+                                                   placeholder="Tên người dùng" th:field="*{address}">
                                         </div>
                                         <!-- /.form-group -->
                                     </div>

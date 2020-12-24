@@ -3,6 +3,7 @@ package com.personal.requestmanagement.controller;
 import com.personal.requestmanagement.constant.CommonConst;
 import com.personal.requestmanagement.model.dto.UserDto;
 import com.personal.requestmanagement.repository.UserRepository;
+import com.personal.requestmanagement.service.DepartmentService;
 import com.personal.requestmanagement.service.UserService;
 import com.personal.requestmanagement.utils.ThymeleafUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,20 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    DepartmentService departmentService;
 
     @GetMapping("")
     @Secured(CommonConst.ROLE_OPERATOR)
-    public String list(Model model, @RequestParam(name = "deptId", required = false) Long deptId, @RequestParam(name = "username", required = false, defaultValue = "") String username){
+    public String list(Model model, @RequestParam(name = "deptId", required = false) Long deptId, @RequestParam(name = "userName", required = false, defaultValue = "") String userName){
         ThymeleafUtil.insertContent(model, "fragments/user", "list", "Danh sách người dùng", "Quản lý người dùng");
         if(deptId == null)
             deptId = (long) 0;
-        model.addAttribute("list", userRepository.findAllDto(deptId, username));
+        model.addAttribute("list", userService.findAllDto(deptId, userName));
         model.addAttribute("deptId", deptId);
-        model.addAttribute("username", username);
+        model.addAttribute("userName", userName);
+        model.addAttribute("listDept", departmentService.findAllDto("", ""));
 
         return "index";
     }
