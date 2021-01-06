@@ -71,18 +71,4 @@ public class ConfirmRequestController {
         return "index";
     }
 
-//    @PostMapping("/doSave")
-//    @Secured(CommonConst.ROLE_MANAGER)
-//    public String leaveSave(Model model, @ModelAttribute @Valid RequestDto dto, Errors errors, RedirectAttributes redirAttrs){
-//        if(errors != null && errors.getErrorCount() == 0 && requestService.save(dto) != null){
-//            ThymeleafUtil.successMessage(redirAttrs);
-//            return "redirect:/request";
-//        }
-//
-//        if(errors != null && errors.getErrorCount() > 0){
-//            ThymeleafUtil.errorMessages(model, errors);
-//        } else ThymeleafUtil.errorMessage(model);
-//        dto.setStatus(0);
-//        return this.confirmLeave(model, dto, null);
-//    }
 }

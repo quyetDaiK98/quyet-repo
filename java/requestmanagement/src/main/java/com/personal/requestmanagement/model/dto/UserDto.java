@@ -1,16 +1,11 @@
 package com.personal.requestmanagement.model.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.personal.requestmanagement.model.entity.Role;
+import com.personal.requestmanagement.model.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.constraints.NotEmpty;
-
-import com.personal.requestmanagement.model.entity.Role;
-import com.personal.requestmanagement.model.entity.User;
 
 //@Getter
 //@Setter
@@ -20,15 +15,15 @@ public class UserDto {
 
     private String password;
 
-    @NotEmpty(message = "Tên người dùng không được để trống!")
     private String userName;
 
     private List<String> roleCodes;
 
-    @NotEmpty(message = "Quyền người dùng không được để trống!")
     private String roleCode;
     
     private DepartmentDto department;
+
+	private MultipartFile multipartFile;
     
     private String email;
     
@@ -74,13 +69,17 @@ public class UserDto {
 		this.password = password;
 	}
 
-
-
 	public String getUserName() {
 		return userName;
 	}
 
+	public MultipartFile getMultipartFile() {
+		return multipartFile;
+	}
 
+	public void setMultipartFile(MultipartFile multipartFile) {
+		this.multipartFile = multipartFile;
+	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;

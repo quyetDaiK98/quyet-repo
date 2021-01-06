@@ -58,6 +58,10 @@ public class RequestController {
         ThymeleafUtil.insertContent(model, "fragments/request", "list", "Danh sách đề nghị", "Đề nghị cá nhân");
 
         model.addAttribute("searchDto", searchDto);
+        
+        model.addAttribute("status", CommonConst.REQUEST_STATUS);
+
+        model.addAttribute("type", CommonConst.REQUEST_TYPE);
 
         User user = userService.getCurrentUser();
 

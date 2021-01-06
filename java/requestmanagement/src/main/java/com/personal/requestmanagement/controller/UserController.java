@@ -25,7 +25,7 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-    
+
     @Autowired
     DepartmentService departmentService;
 
@@ -53,7 +53,10 @@ public class UserController {
             dto = userRepository.findOneDto(dto.getId());
 
         model.addAttribute("dto", dto == null ? new UserDto() : dto);
-
+        model.addAttribute("listDept", departmentService.findAllDto("", ""));
+        if(dto != null && dto.getDepartment() != null) {
+        	model.addAttribute("deptId", dto.getDepartment().getId());
+        }
 
         return "index";
     }
@@ -84,7 +87,7 @@ public class UserController {
         } catch (Exception ex){
             ex.printStackTrace();
         }
-            
+
         ThymeleafUtil.errorMessage(redirAttrs);
         return "redirect:/user";
     }
